@@ -41,7 +41,7 @@ export function Footer() {
       <div className="border-t border-line">
         <div className="container-page flex flex-col-reverse items-start justify-between gap-4 py-6 sm:flex-row sm:items-center">
           <p className="font-mono text-xs text-fg-subtle">
-            © <CurrentYear /> {profile.name}. Built with Next.js, hosted on GitHub Pages.
+            © <CurrentYear /> {profile.name} <span aria-hidden="true">·</span> Designed and engineered with intent.
           </p>
           <SocialLinks className="-ml-2 sm:-mr-2 sm:ml-0" />
         </div>

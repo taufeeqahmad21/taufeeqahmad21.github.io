@@ -11,7 +11,7 @@ export const siteMeta = {
   shortTitle: profile.name,
   description: `${profile.name} is an Android developer and software engineer building scalable Android apps with Kotlin and Jetpack Compose, and modern web platforms with Next.js and TypeScript.`,
   keywords: [
-    "Tauseef Ahmad",
+    "Taufeeq Ahmad",
     "Android Developer",
     "Software Engineer",
     "Kotlin",

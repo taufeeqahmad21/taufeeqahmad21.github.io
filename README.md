@@ -1,6 +1,6 @@
-# Tauseef Ahmad — Portfolio
+# Taufeeq Ahmad — Portfolio
 
-Personal portfolio for **Tauseef Ahmad, Android Developer & Software Engineer**.
+Personal portfolio for **Taufeeq Ahmad, Android Developer & Software Engineer**.
 A static, dark, editorial-style single-page site built with Next.js (App Router), exported as plain
 HTML/CSS/JS and deployed to GitHub Pages.
 
@@ -41,17 +41,17 @@ shows an honest "pending" state instead of a broken link) or explicitly flagged 
 
 | What | Where | Current state |
 |---|---|---|
-| Availability status | `src/data/profile.ts` → `availability` | Placeholder text; set a real label and `isPlaceholder: false` (turns the dot green) |
-| Email | `src/data/profile.ts` → `const email` | `null`: "Send an email" button is disabled |
-| GitHub profile URL | `src/data/profile.ts` → `socials.github.href` | `null` |
-| LinkedIn URL | `src/data/profile.ts` → `socials.linkedin.href` | `null` |
+| Availability status | `src/data/profile.ts` → `availability` | ✅ Set |
+| Email | `src/data/profile.ts` → `const email` | ✅ Set |
+| GitHub profile URL | `src/data/profile.ts` → `socials.github.href` | ✅ Set |
+| LinkedIn URL | `src/data/profile.ts` → `socials.linkedin.href` | ✅ Set |
 | Résumé PDF | add `public/resume.pdf`, then set `resumeUrl: "/resume.pdf"` | `null`: Résumé button is disabled |
 | Project live/source links | `src/data/projects.ts` → `links` | `null` for Kalyvor and InvoiceFlow ("Not yet public") |
 | Project screenshots | `src/data/projects.ts` → `preview` | Code-drawn illustrations labelled "Illustrative preview" |
 | Experience | `src/data/experience.ts` | One entry for your own products and one placeholder role marked "To be added" |
 | Repositories | `src/data/github.ts` | Repo names are guesses (`kalyvor`, `invoiceflow`), with no links or languages |
 
-Search the codebase for `PLACEHOLDER` to find every spot.
+Search the codebase for `PLACEHOLDER`, `null` links and `isPlaceholder: true` to find what is still pending.
 
 ### Adding a project
 
@@ -177,7 +177,7 @@ workflow run and in Settings → Pages.
 ### Custom domain (optional)
 
 Add the domain in Settings → Pages and create a `public/CNAME` file containing just the domain
-(e.g. `tauseef.dev`). `configure-pages` then reports the custom domain as the base URL, so
+(e.g. `example.com`). `configure-pages` then reports the custom domain as the base URL, so
 canonical, Open Graph, sitemap and robots URLs follow automatically.
 
 ### Testing a sub-path build locally

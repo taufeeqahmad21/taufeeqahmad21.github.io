@@ -19,3 +19,9 @@ export function withBasePath(path: string): string {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }
+
+/** "InvoiceFlow" → "IF", "WA Toolbox" → "WT": capitals first, falling back to the first two letters. */
+export function initials(name: string): string {
+  const caps = name.match(/[A-Z]/g)?.join("") ?? "";
+  return (caps.length >= 2 ? caps : name).slice(0, 2).toUpperCase();
+}

@@ -1,15 +1,6 @@
 import type { ComponentType, SVGProps } from "react";
-import {
-  Compass,
-  Globe,
-  Layers,
-  Mail,
-  Server,
-  Smartphone,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react";
-import type { FocusArea, SkillCategory, SocialKey } from "@/types/content";
+import { Mail } from "lucide-react";
+import type { SocialKey } from "@/types/content";
 
 /* Lucide no longer ships brand marks, so the two we need are drawn here. */
 
@@ -35,18 +26,4 @@ export const socialIcons: Record<SocialKey, IconComponent> = {
   github: GitHubIcon,
   linkedin: LinkedInIcon,
   email: Mail,
-};
-
-export const focusIcons: Record<FocusArea["icon"], LucideIcon> = {
-  smartphone: Smartphone,
-  layers: Layers,
-  globe: Globe,
-  compass: Compass,
-};
-
-export const skillIcons: Record<SkillCategory["icon"], LucideIcon> = {
-  smartphone: Smartphone,
-  globe: Globe,
-  server: Server,
-  wrench: Wrench,
 };

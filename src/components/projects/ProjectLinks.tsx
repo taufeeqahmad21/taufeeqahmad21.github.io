@@ -1,6 +1,6 @@
-import { ArrowUpRight, Globe, Hammer, Play } from "lucide-react";
+import { Globe, Hammer, Play } from "lucide-react";
 import type { Project } from "@/types/content";
-import { ButtonLink } from "@/components/ui/Button";
+import { ButtonArrow, ButtonLink, type ButtonSize } from "@/components/ui/Button";
 import { GitHubIcon } from "@/components/ui/Icons";
 
 /**
@@ -10,7 +10,7 @@ import { GitHubIcon } from "@/components/ui/Icons";
  * - in development → a non-interactive "In Development" state
  * "Source Code" is only shown when the repository is public.
  */
-export function ProjectLinks({ project }: { project: Project }) {
+export function ProjectLinks({ project, size = "md" }: { project: Project; size?: ButtonSize }) {
   const { live, source } = project.links;
   const released = project.status !== "in-development" && live;
 
@@ -19,7 +19,7 @@ export function ProjectLinks({ project }: { project: Project }) {
       {released ? (
         <ButtonLink
           href={live}
-          size="md"
+          size={size}
           icon={
             project.platform === "android" ? (
               <Play className="size-4 fill-current" aria-hidden="true" />
@@ -27,7 +27,7 @@ export function ProjectLinks({ project }: { project: Project }) {
               <Globe className="size-4" aria-hidden="true" />
             )
           }
-          trailingIcon={<ArrowUpRight className="size-4" aria-hidden="true" />}
+          trailingIcon={<ButtonArrow direction="up-right" />}
         >
           {project.platform === "android" ? "Google Play" : "Visit Website"}
           <span className="sr-only">: {project.name}</span>
@@ -35,7 +35,7 @@ export function ProjectLinks({ project }: { project: Project }) {
       ) : (
         <ButtonLink
           href={null}
-          size="md"
+          size={size}
           icon={<Hammer className="size-4" aria-hidden="true" />}
           pendingLabel={`${project.name} is in development; public links will be added when available`}
         >
@@ -43,12 +43,7 @@ export function ProjectLinks({ project }: { project: Project }) {
         </ButtonLink>
       )}
       {source && (
-        <ButtonLink
-          href={source}
-          size="md"
-          variant="secondary"
-          icon={<GitHubIcon className="size-4" />}
-        >
+        <ButtonLink href={source} size={size} variant="secondary" icon={<GitHubIcon className="size-4" />}>
           Source Code
         </ButtonLink>
       )}

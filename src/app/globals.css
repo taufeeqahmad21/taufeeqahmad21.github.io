@@ -1,43 +1,47 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   Design system
-   All colours, type, radii, shadows and motion tokens live here. Components
-   use the generated utilities (bg-surface-1, text-fg-muted, rounded-card …)
-   rather than raw values, so the whole site can be re-tuned from this file.
+   Design system — "Premium editorial, subtly futuristic"
+   Every colour, type size, radius, shadow and motion token lives here.
+   Components only use the generated utilities (bg-surface-1, text-fg-muted,
+   rounded-stage, text-display …), so the site can be re-tuned from this file.
    ========================================================================== */
 
 @theme {
-  /* ---- Surfaces (midnight navy → near-black, layered) ---- */
-  --color-bg: #06080d;
-  --color-surface-1: #0a0e16;
-  --color-surface-2: #0f141f;
-  --color-surface-3: #151b28;
-  --color-surface-4: #1c2333;
+  /* ---- Surfaces: near-black → midnight navy, layered ---- */
+  --color-bg: #05070c;
+  --color-surface-1: #0a0d15;
+  --color-surface-2: #0f131e;
+  --color-surface-3: #151a27;
+  --color-surface-4: #1c2232;
 
-  /* ---- Lines ---- */
+  /* ---- Hairlines ---- */
   --color-line: rgb(148 163 184 / 0.1);
   --color-line-strong: rgb(148 163 184 / 0.18);
-  --color-line-accent: rgb(108 150 255 / 0.35);
+  --color-line-accent: rgb(108 150 255 / 0.38);
 
   /* ---- Text ---- */
-  --color-fg: #e9edf4;
-  --color-fg-muted: #9ba6b9;
-  --color-fg-subtle: #7d889c;
+  --color-fg: #eceff5;
+  --color-fg-muted: #9ca7ba;
+  --color-fg-subtle: #7e899d;
 
-  /* ---- Accent (electric blue) and secondary (violet) ---- */
+  /* ---- Accents: electric blue, violet, and a status green ---- */
   --color-accent: #5b8cff;
-  --color-accent-strong: #84a8ff;
+  --color-accent-strong: #8aadff;
   --color-accent-soft: rgb(91 140 255 / 0.12);
-  --color-violet: #a08cff;
-  --color-violet-soft: rgb(160 140 255 / 0.12);
+  --color-violet: #a28eff;
+  --color-violet-soft: rgb(162 142 255 / 0.12);
   --color-success: #4ade80;
+  --color-success-soft: rgb(74 222 128 / 0.08);
+  /* Per-project atmosphere tints (used at low opacity in showcase backgrounds). */
+  --color-tint-emerald: #34d399;
+  --color-tint-blue: #4c8dff;
+  --color-tint-violet: #9b87ff;
 
-  /* ---- Syntax colours for the hero code window ---- */
+  /* ---- Syntax colours (hero code fragment) ---- */
   --color-code-keyword: #b39cff;
   --color-code-string: #8fd6a8;
-  --color-code-type: #84a8ff;
-  --color-code-annotation: #f2c27a;
+  --color-code-type: #8aadff;
   --color-code-comment: #5d6880;
 
   /* ---- Typography ---- */
@@ -45,12 +49,22 @@
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
   --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
 
-  --text-display: clamp(2.75rem, 1.6rem + 4.6vw, 5.25rem);
-  --text-display--line-height: 1.02;
-  --text-display--letter-spacing: -0.035em;
-  --text-title: clamp(2rem, 1.45rem + 2.2vw, 3.25rem);
-  --text-title--line-height: 1.08;
-  --text-title--letter-spacing: -0.03em;
+  /* Editorial scale. All fluid between 375px and 1440px. */
+  --text-mega: clamp(2.875rem, 0.9rem + 8.4vw, 8.5rem);
+  --text-mega--line-height: 0.94;
+  --text-mega--letter-spacing: -0.045em;
+  --text-display: clamp(2.875rem, 1.1rem + 7.2vw, 7.25rem);
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: -0.042em;
+  --text-title: clamp(2.25rem, 1.35rem + 3.6vw, 4.5rem);
+  --text-title--line-height: 1;
+  --text-title--letter-spacing: -0.036em;
+  --text-showcase: clamp(2.25rem, 1.5rem + 3vw, 4rem);
+  --text-showcase--line-height: 1;
+  --text-showcase--letter-spacing: -0.035em;
+  --text-statement: clamp(1.625rem, 1.2rem + 1.7vw, 2.625rem);
+  --text-statement--line-height: 1.2;
+  --text-statement--letter-spacing: -0.025em;
   --text-heading: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
   --text-heading--line-height: 1.2;
   --text-heading--letter-spacing: -0.02em;
@@ -58,23 +72,26 @@
   --text-lead--line-height: 1.65;
   --text-eyebrow: 0.75rem;
   --text-eyebrow--line-height: 1;
-  --text-eyebrow--letter-spacing: 0.14em;
+  --text-eyebrow--letter-spacing: 0.16em;
 
   /* ---- Radii ---- */
-  --radius-control: 0.625rem;
+  --radius-control: 0.75rem;
   --radius-card: 1.25rem;
   --radius-panel: 1.75rem;
+  --radius-stage: 2rem;
 
   /* ---- Shadows ---- */
   --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.6);
-  --shadow-raised: 0 1px 0 0 rgb(255 255 255 / 0.06) inset, 0 30px 60px -30px rgb(0 0 0 / 0.75);
-  --shadow-glow: 0 0 0 1px rgb(91 140 255 / 0.35), 0 8px 30px -8px rgb(91 140 255 / 0.45);
+  --shadow-raised: 0 1px 0 0 rgb(255 255 255 / 0.06) inset, 0 30px 60px -30px rgb(0 0 0 / 0.8);
+  --shadow-stage: 0 1px 0 0 rgb(255 255 255 / 0.05) inset, 0 50px 100px -50px rgb(0 0 0 / 0.9);
+  --shadow-glow: 0 0 0 1px rgb(91 140 255 / 0.35), 0 10px 34px -10px rgb(91 140 255 / 0.55);
 
   /* ---- Motion ---- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
   --duration-base: 250ms;
   --duration-slow: 600ms;
+  --duration-image: 900ms;
 
   --animate-pulse-dot: pulse-dot 2.4s var(--ease-out-expo) infinite;
 
@@ -92,7 +109,7 @@
 /* ---- Layout primitives ---- */
 @utility container-page {
   width: 100%;
-  max-width: 76rem;
+  max-width: 80rem;
   margin-inline: auto;
   padding-inline: 1.25rem;
   @media (width >= 40rem) {
@@ -104,18 +121,21 @@
 }
 
 @utility section-y {
-  padding-block: 5.5rem;
+  padding-block: 6rem;
   @media (width >= 48rem) {
-    padding-block: 7.5rem;
+    padding-block: 8.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 10rem;
   }
 }
 
 /* Faint engineering grid, masked so it fades out at the edges. */
 @utility bg-grid {
   background-image:
-    linear-gradient(to right, rgb(148 163 184 / 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(148 163 184 / 0.06) 1px, transparent 1px);
-  background-size: 56px 56px;
+    linear-gradient(to right, rgb(148 163 184 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(148 163 184 / 0.055) 1px, transparent 1px);
+  background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 30%, transparent 75%);
 }
 
@@ -129,11 +149,54 @@
   box-shadow: var(--shadow-card);
 }
 
+/* Large showcase surface used by the project stages and the contact panel. */
+@utility surface-stage {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.03), transparent 30%),
+    var(--color-surface-1);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-stage);
+  box-shadow: var(--shadow-stage);
+}
+
+/* Frosted glass for floating UI (navigation, overlays). */
+@utility surface-glass {
+  background: rgb(10 13 21 / 0.82);
+  border: 1px solid var(--color-line-strong);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+/* Serif italic accent words inside sans headlines. */
+@utility text-accent-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
 @utility text-gradient {
-  background: linear-gradient(100deg, var(--color-fg) 20%, var(--color-accent-strong) 60%, var(--color-violet) 100%);
+  background: linear-gradient(100deg, var(--color-fg) 10%, var(--color-accent-strong) 55%, var(--color-violet) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Hairline that fades out at both ends. */
+@utility rule-fade {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-line-strong) 20%, var(--color-line-strong) 80%, transparent);
+}
+
+/* Horizontal scroll strip without a visible scrollbar (touch / trackpad friendly). */
+@utility scroll-strip {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* ---- Base ---- */
@@ -141,7 +204,7 @@
   html {
     color-scheme: dark;
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
 

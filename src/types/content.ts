@@ -18,8 +18,8 @@ export type Profile = {
   secondaryExpertise: string;
   positioning: string;
   headline: string;
-  /** A word from `headline` set in the italic serif accent face. */
-  headlineAccent?: string;
+  /** Words from `headline` set in the italic serif accent face. */
+  headlineAccents: string[];
   intro: string;
   availability: {
     label: string;
@@ -46,14 +46,12 @@ export type SectionCopy = {
 };
 
 export type FocusArea = {
-  icon: "smartphone" | "layers" | "globe" | "compass";
   title: string;
   description: string;
 };
 
 export type SkillCategory = {
   id: string;
-  icon: "smartphone" | "globe" | "server" | "wrench";
   title: string;
   description: string;
   skills: string[];
@@ -82,10 +80,17 @@ export type Project = {
   category: string;
   platform: "web" | "android";
   status: ProjectStatus;
+  /** One-paragraph product summary. */
   description: string;
+  /** Short facts shown beside the description, e.g. "Positioning", "Built with". Verified only. */
+  details?: { label: string; text: string }[];
+  /** Feature names exactly as the product presents them. */
+  features?: string[];
   technologies: string[];
   /** Real app or site icon, if available. */
   icon?: StaticImageData;
+  /** Background atmosphere of the showcase. */
+  tint: "emerald" | "blue" | "violet";
   links: {
     /** Store listing or website URL. Only set when verified and public. */
     live: string | null;
@@ -95,22 +100,11 @@ export type Project = {
   featured: boolean;
 };
 
-export type ExperienceEntry = {
-  id: string;
+/** One step in the independent product journey (not employment). */
+export type JourneyEntry = {
+  /** Project this step refers to; status, platform and links come from it. */
+  projectSlug: string;
+  /** What the work involved. Factual, no invented metrics. */
   role: string;
-  organization: string;
-  period: string;
   summary: string;
-  highlights: string[];
-  technologies: string[];
-  /** Placeholder entries render with a dashed "to be added" treatment. */
-  isPlaceholder: boolean;
-};
-
-export type Repository = {
-  name: string;
-  description: string;
-  /** Only set once verified on GitHub. */
-  language: string | null;
-  href: string | null;
 };

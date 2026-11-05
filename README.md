@@ -48,8 +48,7 @@ shows an honest "pending" state instead of a broken link) or explicitly flagged 
 | Résumé PDF | add `public/resume.pdf`, then set `resumeUrl: "/resume.pdf"` | `null`: Résumé button is disabled |
 | Project live/source links | `src/data/projects.ts` → `links` | ✅ WA Toolbox (Google Play) and Kalyvor (kalyvor.com) set; InvoiceFlow pending (in development); no public source repos |
 | Project screenshots | `src/data/projects.ts` → `preview` | ✅ Real screenshots for WA Toolbox and Kalyvor; InvoiceFlow uses a labelled mockup |
-| Experience | `src/data/experience.ts` | ✅ Independent product development only; add verified roles as needed |
-| Repositories | `src/data/github.ts` | Shown by project name, marked "Not yet public"; add real repo name, `href` and `language` once public |
+| Product journey | `src/data/journey.ts` | ✅ Independent product work (WA Toolbox, Kalyvor, InvoiceFlow), labelled as not employment; no dates or employers |
 
 Search the codebase for `PLACEHOLDER`, `null` links and `isPlaceholder: true` to find what is still pending.
 
@@ -68,6 +67,9 @@ import myAppIcon from "@/assets/projects/my-app-icon.png"; // optional icon
   platform: "android",
   status: "published", // "published" | "live" | "in-development"
   description: "One or two sentences on what it does and who it's for.",
+  details: [{ label: "Platform", text: "Native Android app, published on Google Play." }], // optional, verified facts only
+  features: ["Feature as the product names it"], // optional
+  tint: "violet", // showcase atmosphere: "emerald" | "blue" | "violet"
   technologies: ["Kotlin", "Jetpack Compose", "Room"],
   icon: myAppIcon,
   links: { live: "https://play.google.com/store/apps/details?id=…", source: null },
@@ -78,7 +80,7 @@ import myAppIcon from "@/assets/projects/my-app-icon.png"; // optional icon
   },
   // website: preview: { kind: "image", src, alt, caption: "Screenshot · example.com" }
   // no screenshots yet: preview: { kind: "mockup", variant: "android-generic" }
-  featured: false, // true = large showcase row, false = card in the grid
+  featured: true, // true = large showcase; false = the quieter "in development" panel
 }
 ```
 
@@ -103,40 +105,57 @@ src/
     icon.svg              Favicon
     og-image.png/route.tsx  Open Graph image, rendered to a PNG at build time
     sitemap.ts, robots.ts   Generated sitemap.xml and robots.txt
+  assets/projects/        Real screenshots and icons (imported statically)
   components/
-    layout/               Header (+ mobile menu), Footer, Logo, MotionProvider, CurrentYear
-    sections/             Hero, About, Skills, Projects, Experience, GitHub, Contact
-    projects/             FeaturedProject, ProjectCard, ProjectPreview (mockups), ProjectLinks
-    hero/                 HeroVisual (code window + device) and a tiny build-time Kotlin highlighter
-    ui/                   Button, Badge, Card, SectionHeading, Reveal, SocialLinks, Icons
-  data/                   All copy and links: profile, site (nav + section copy), skills,
-                          projects, experience, github
-  lib/                    utils (cn, withBasePath), site (URL + SEO), motion tokens
+    layout/               Header (floating nav + mobile menu), Footer, Logo, MotionProvider, CurrentYear
+    sections/             Hero, Work, About, Technology, Journey, Contact (in page order)
+    projects/             ProjectShowcase (released), ProjectInDevelopment, ProjectMedia
+                          (screenshot gallery, browser frame, labelled mockups), ProjectLinks, ProjectStatus
+    hero/                 AnimatedHeadline (word-by-word entrance), HeroVisual (product console)
+    ui/                   Button (+ ButtonArrow), Badge, SectionHeading, Reveal, SocialLinks, Icons
+  data/                   All copy and links: profile, site (nav, section copy, About),
+                          skills, projects, journey
+  lib/                    utils (cn, withBasePath, initials), site (URL + SEO), motion tokens
   types/content.ts        Types for all content
 ```
 
 Most components are server components. The client components are `Header` (scroll state,
-active-section tracking, mobile menu), `Reveal` (scroll-in animation), `MotionProvider` and
-`CurrentYear`.
+active-section tracking, mobile menu), `AnimatedHeadline`, `Reveal` (scroll-in animation),
+`MotionProvider` and `CurrentYear`.
 
 ## Design system
+
+Direction: premium editorial with a subtle futuristic edge. Near-black and midnight navy
+surfaces, large sans headlines with serif-italic accent words, hairline borders, low-opacity
+atmospheric gradients and an electric blue / violet accent pair.
 
 All tokens are defined in `@theme` in `src/app/globals.css`, so Tailwind generates matching
 utilities:
 
-- **Surfaces:** `bg` → `surface-1…4` (midnight navy to near-black, layered)
+- **Surfaces:** `bg` → `surface-1…4`; utilities `surface-card`, `surface-stage` (project
+  showcases), `surface-glass` (floating navigation)
 - **Text:** `fg`, `fg-muted`, `fg-subtle` (all meet WCAG AA on the background)
-- **Accent:** electric blue `accent` / `accent-strong`, with a secondary `violet` for Android
-- **Lines:** `line`, `line-strong`, `line-accent`
-- **Type:** Geist (sans), Geist Mono (labels and code), Instrument Serif italic (accent words);
-  fluid sizes `text-display`, `text-title`, `text-heading`, `text-lead`, `text-eyebrow`
-- **Radii:** `rounded-control`, `rounded-card`, `rounded-panel`
-- **Shadows:** `shadow-card`, `shadow-raised`, `shadow-glow`
-- **Motion:** `--ease-out-expo`, `--duration-fast|base|slow` (mirrored in `src/lib/motion.ts`)
-- **Utilities:** `container-page`, `section-y`, `surface-card`, `bg-grid`, `text-gradient`
-- **Variants:** `Button` (primary / secondary / ghost × sm / md / lg, plus a pending state),
-  `Card` (default / interactive / raised / placeholder), `Badge` (default / accent / violet /
-  outline / pending)
+- **Accent:** electric blue `accent` / `accent-strong`, `violet`, and `success` for live status;
+  per-project atmosphere tints `tint-emerald`, `tint-blue`, `tint-violet`
+- **Lines:** `line`, `line-strong`, `line-accent`, plus the `rule-fade` hairline
+- **Type:** Geist (sans), Geist Mono (labels), Instrument Serif italic (`text-accent-serif`);
+  fluid sizes `text-mega`, `text-display`, `text-title`, `text-showcase`, `text-statement`,
+  `text-heading`, `text-lead`, `text-eyebrow`
+- **Radii:** `rounded-control`, `rounded-card`, `rounded-panel`, `rounded-stage`
+- **Shadows:** `shadow-card`, `shadow-raised`, `shadow-stage`, `shadow-glow`
+- **Motion:** `--ease-out-expo`, `--duration-fast|base|slow|image` (mirrored in `src/lib/motion.ts`,
+  with stagger steps)
+- **Layout:** `container-page` (80rem), `section-y`, `bg-grid`, `scroll-strip`
+- **Components:** `Button` (primary / secondary / ghost × sm / md / lg, pending state, press
+  and hover micro-interactions), `Badge` (default / accent / violet / outline / success / pending),
+  `SectionHeading` (index + eyebrow on a hairline, serif-accent title)
+
+### Motion
+
+Entrance: the hero headline rises word by word; everything else fades and lifts once as it
+scrolls into view (`Reveal`). Hover: project screenshots lift, website previews ease in by
+1.5%, buttons get a light sheen and arrow nudge, rows in About and Technology highlight. No
+parallax. `prefers-reduced-motion` is honoured in CSS and by `MotionConfig reducedMotion="user"`.
 
 ## Accessibility
 

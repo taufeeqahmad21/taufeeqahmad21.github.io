@@ -1,107 +1,110 @@
-import { profile } from "@/data/profile";
-import { highlightKotlin, type TokenKind } from "./highlight";
+import Image from "next/image";
+import { projects, getProject } from "@/data/projects";
+import type { Project } from "@/types/content";
+import { cn, initials } from "@/lib/utils";
 
-const focus = ["Android", "Architecture", "Web"];
-const firstName = profile.name.split(" ")[0];
-
-const snippet = `data class Engineer(
-    val name: String = "${profile.name}",
-    val focus: List<String> = listOf(
-        ${focus.map((f) => `"${f}"`).join(", ")},
-    ),
-)
-
-@Composable
-fun Introduction(engineer: Engineer) {
-    // Code that turns into an experience
-    Greeting(engineer.name)
-    FocusRow(engineer.focus)
-}`;
-
-const tokenColor: Record<TokenKind, string> = {
-  keyword: "text-code-keyword",
-  string: "text-code-string",
-  type: "text-code-type",
-  annotation: "text-code-annotation",
-  comment: "text-code-comment italic",
-  plain: "text-fg-muted",
+const statusLabel: Record<Project["status"], string> = {
+  published: "Published",
+  live: "Live",
+  "in-development": "In development",
 };
 
-const lines = highlightKotlin(snippet);
+const waToolbox = getProject("wa-toolbox");
+const peekShot = waToolbox.preview.kind === "screenshots" ? waToolbox.preview.images[1] : null;
 
 /**
- * Decorative hero visual: a Kotlin/Compose editor window and the device preview it
- * "renders", which is the code-to-interface idea the portfolio is about.
- * Purely presentational, so it's hidden from assistive tech.
+ * Hero composition: a "product console" listing the real products with their real icons
+ * and status, and one real Play Store screenshot peeking out behind it. Presentational
+ * (the Work section carries the same information), so it's hidden from assistive tech.
  */
 export function HeroVisual() {
   return (
-    <div aria-hidden="true" className="relative mx-auto w-full max-w-[34rem] select-none lg:mx-0">
-      {/* soft accent bloom behind the window */}
-      <div className="absolute -inset-x-10 -top-10 bottom-0 -z-10 bg-[radial-gradient(closest-side,rgb(91_140_255/0.16),transparent)] blur-2xl" />
+    <div aria-hidden="true" className="relative mx-auto w-full max-w-[34rem] select-none lg:ml-auto lg:mr-0">
+      {/* atmosphere */}
+      <div className="absolute -inset-10 -z-10 bg-[radial-gradient(closest-side,rgb(91_140_255/0.18),transparent)] blur-2xl" />
 
-      {/* editor window */}
-      <div className="overflow-hidden rounded-panel border border-line-strong bg-surface-1/90 shadow-raised backdrop-blur">
-        <div className="flex items-center gap-4 border-b border-line bg-surface-2/60 px-4 py-3">
-          <div className="flex gap-1.5">
-            <span className="size-2.5 rounded-full bg-surface-4" />
-            <span className="size-2.5 rounded-full bg-surface-4" />
-            <span className="size-2.5 rounded-full bg-surface-4" />
-          </div>
-          <div className="flex gap-1 font-mono text-[0.6875rem]">
-            <span className="rounded-md border border-line bg-surface-3 px-2.5 py-1 text-fg">Introduction.kt</span>
-            <span className="hidden px-2.5 py-1 text-fg-subtle sm:inline">Theme.kt</span>
-          </div>
+      {/* real screenshot behind the console */}
+      {peekShot && (
+        <div className="absolute -right-3 -top-16 hidden w-36 rotate-[7deg] overflow-hidden rounded-2xl border border-line-strong shadow-raised sm:block lg:-right-8 xl:-right-14">
+          <Image src={peekShot.src} alt="" sizes="144px" className="h-auto w-full" priority />
         </div>
-        <pre className="overflow-hidden px-4 py-5 font-mono text-[0.6875rem] leading-[1.75] sm:px-5 sm:text-[0.78rem]">
+      )}
+
+      <div className="relative overflow-hidden rounded-panel border border-line-strong bg-surface-1/85 shadow-stage backdrop-blur-xl">
+        {/* window bar */}
+        <div className="flex items-center justify-between gap-4 border-b border-line px-5 py-3.5">
+          <div className="flex items-center gap-3">
+            <div className="flex gap-1.5">
+              <span className="size-2.5 rounded-full bg-surface-4" />
+              <span className="size-2.5 rounded-full bg-surface-4" />
+              <span className="size-2.5 rounded-full bg-surface-4" />
+            </div>
+            <span className="font-mono text-[0.6875rem] text-fg-subtle">~/products</span>
+          </div>
+          <span className="font-mono text-[0.6875rem] text-fg-subtle">{projects.length} products</span>
+        </div>
+
+        {/* code fragment */}
+        <pre className="border-b border-line px-5 py-4 font-mono text-[0.6875rem] leading-[1.8] sm:text-xs">
           <code>
-            {lines.map((tokens, i) => (
-              <span key={i} className="flex">
-                <span className="w-7 shrink-0 pr-3 text-right text-fg-subtle/50 tabular-nums">{i + 1}</span>
-                <span className="whitespace-pre">
-                  {tokens.map((t, j) => (
-                    <span key={j} className={tokenColor[t.kind]}>
-                      {t.text}
-                    </span>
-                  ))}
-                </span>
-              </span>
-            ))}
+            <span className="text-code-keyword">val</span> <span className="text-fg">shipped</span>{" "}
+            <span className="text-fg-subtle">=</span> <span className="text-fg">products</span>
+            {"\n"}
+            {"    "}
+            <span className="text-fg-subtle">.</span>
+            <span className="text-code-type">filter</span> <span className="text-fg-subtle">{"{"}</span>{" "}
+            <span className="text-fg">it</span>
+            <span className="text-fg-subtle">.</span>
+            <span className="text-fg">isPublic</span> <span className="text-fg-subtle">{"}"}</span>
+            {"  "}
+            <span className="text-code-comment italic">{"// idea → release"}</span>
           </code>
         </pre>
-      </div>
 
-      {/* device preview — overlaps the editor on larger screens */}
-      <div className="absolute -bottom-10 -right-2 hidden w-44 rotate-[2deg] sm:block lg:-right-8 xl:-right-12">
-        <div className="rounded-[1.75rem] border border-line-strong bg-surface-2 p-1.5 shadow-raised">
-          <div className="overflow-hidden rounded-[1.4rem] border border-line bg-bg">
-            <div className="flex justify-center pt-2">
-              <span className="h-1.5 w-12 rounded-full bg-surface-3" />
-            </div>
-            <div className="flex flex-col gap-3 px-3.5 pb-4 pt-4">
-              <span className="font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-accent-strong">
-                Preview
-              </span>
-              <span className="text-[0.8125rem] font-semibold leading-snug text-fg">
-                Hi, I&apos;m {firstName}.
-              </span>
-              <span className="text-[0.625rem] leading-relaxed text-fg-muted">
-                I build Android apps and web platforms.
-              </span>
-              <span className="flex flex-wrap gap-1">
-                {focus.map((f) => (
-                  <span
-                    key={f}
-                    className="rounded-full border border-line-accent bg-accent-soft px-1.5 py-0.5 text-[0.5rem] text-accent-strong"
-                  >
-                    {f}
+        {/* product rows */}
+        <ul className="divide-y divide-line">
+          {projects.map((project) => {
+            const released = project.status !== "in-development";
+            return (
+              <li key={project.slug} className="flex items-center gap-4 px-5 py-4">
+                {project.icon ? (
+                  <Image
+                    src={project.icon}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="size-10 shrink-0 rounded-[0.7rem] border border-line-strong"
+                  />
+                ) : (
+                  <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-[0.7rem] border border-dashed border-line-strong font-mono text-[0.6875rem] text-fg-subtle">
+                    {initials(project.name)}
                   </span>
-                ))}
-              </span>
-              <span className="mt-1 h-6 rounded-lg bg-accent/90" />
-            </div>
-          </div>
-        </div>
+                )}
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className={cn("truncate text-[0.9375rem] font-medium", released ? "text-fg" : "text-fg-muted")}>
+                    {project.name}
+                  </span>
+                  <span className="truncate font-mono text-[0.6875rem] text-fg-subtle">
+                    {project.platform === "android" ? "Android" : "Web"} · {project.technologies.slice(0, 2).join(", ")}
+                  </span>
+                </span>
+                <span
+                  className={cn(
+                    "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.6875rem]",
+                    released
+                      ? "border-[rgb(74_222_128/0.28)] bg-success-soft text-success"
+                      : "border-dashed border-line-strong text-fg-subtle",
+                  )}
+                >
+                  <span
+                    className={cn("size-1.5 rounded-full", released ? "bg-success" : "border border-fg-subtle")}
+                  />
+                  {statusLabel[project.status]}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );

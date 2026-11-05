@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Download, Menu, X } from "lucide-react";
 import { navItems } from "@/data/site";
 import { profile } from "@/data/profile";
-import { duration, ease } from "@/lib/motion";
+import { duration, ease, stagger } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ButtonLink } from "@/components/ui/Button";
 import { SocialLinks } from "@/components/ui/SocialLinks";
@@ -34,8 +34,8 @@ function useActiveSection(ids: string[]) {
   return active;
 }
 
-// "github" isn't in the nav, but observing it clears the highlight while it's on screen.
-const sectionIds = [...navItems.map((item) => item.id), "github"];
+// "technology" has no nav entry; observing it clears the highlight while it's on screen.
+const sectionIds = [...navItems.map((item) => item.id), "technology"];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -45,7 +45,7 @@ export function Header() {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -76,69 +76,81 @@ export function Header() {
   }, [open, close]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-(--duration-slow) ease-(--ease-out-expo)",
-        scrolled || open
-          ? "border-b border-line bg-bg/75 backdrop-blur-xl backdrop-saturate-150"
-          : "border-b border-transparent",
-      )}
-    >
-      <nav aria-label="Primary" className="container-page flex h-[4.25rem] items-center justify-between gap-6">
-        <Logo />
+    <header className="fixed inset-x-0 top-0 z-50 pt-3 sm:pt-4">
+      <div className="container-page">
+        <nav
+          aria-label="Primary"
+          className={cn(
+            "surface-glass relative z-10 flex h-14 items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-[box-shadow,background-color] duration-(--duration-slow) ease-(--ease-out-expo) sm:pl-5",
+            scrolled || open ? "shadow-raised" : "shadow-none",
+          )}
+        >
+          <Logo />
 
-        <ul className="hidden items-center gap-1 rounded-full border border-line bg-surface-1/60 p-1 lg:flex">
-          {navItems.map((item) => {
-            const isActive = active === item.id;
-            return (
-              <li key={item.id} className="relative">
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute inset-0 rounded-full bg-surface-3 shadow-[inset_0_1px_0_rgb(255_255_255/0.06)]"
-                    transition={{ duration: duration.slow, ease: ease.outExpo }}
-                  />
-                )}
-                <a
-                  href={`#${item.id}`}
-                  aria-current={isActive ? "true" : undefined}
-                  className={cn(
-                    "relative block rounded-full px-3.5 py-1.5 text-sm transition-colors duration-(--duration-base)",
-                    isActive ? "text-fg" : "text-fg-muted hover:text-fg",
+          <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-0.5 lg:flex">
+            {navItems.map((item) => {
+              const isActive = active === item.id;
+              return (
+                <li key={item.id} className="relative">
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 rounded-full bg-surface-3 shadow-[inset_0_1px_0_rgb(255_255_255/0.07)]"
+                      transition={{ duration: duration.slow, ease: ease.outExpo }}
+                    />
                   )}
-                >
-                  {item.label}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+                  <a
+                    href={`#${item.id}`}
+                    aria-current={isActive ? "true" : undefined}
+                    className={cn(
+                      "relative block rounded-full px-4 py-2.5 text-sm leading-5 transition-colors duration-(--duration-base)",
+                      isActive ? "text-fg" : "text-fg-muted hover:text-fg",
+                    )}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
 
-        <div className="flex items-center gap-2">
-          <ButtonLink
-            href={profile.resumeUrl}
-            variant="secondary"
-            size="sm"
-            download
-            icon={<Download className="size-4" aria-hidden="true" />}
-            pendingLabel={RESUME_PENDING}
-            className="hidden sm:inline-flex"
-          >
-            Résumé
-          </ButtonLink>
-          <button
-            ref={toggleRef}
-            type="button"
-            className="inline-flex size-10 items-center justify-center rounded-control border border-line-strong bg-surface-2/80 text-fg transition-colors hover:bg-surface-3 lg:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => (open ? close() : setOpen(true))}
-          >
-            {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
-          </button>
-        </div>
-      </nav>
+          <div className="flex items-center gap-2">
+            <ButtonLink
+              href={profile.resumeUrl}
+              variant="secondary"
+              size="sm"
+              download
+              icon={<Download className="size-4" aria-hidden="true" />}
+              pendingLabel={RESUME_PENDING}
+              className="hidden sm:inline-flex"
+            >
+              Resume
+            </ButtonLink>
+            <button
+              ref={toggleRef}
+              type="button"
+              className="inline-flex size-10 items-center justify-center rounded-full border border-line-strong bg-surface-2/80 text-fg transition-colors hover:bg-surface-3 lg:hidden"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => (open ? close() : setOpen(true))}
+            >
+              <AnimatePresence initial={false} mode="wait">
+                <motion.span
+                  key={open ? "close" : "open"}
+                  initial={{ opacity: 0, rotate: -45 }}
+                  animate={{ opacity: 1, rotate: 0 }}
+                  exit={{ opacity: 0, rotate: 45 }}
+                  transition={{ duration: duration.base, ease: ease.outExpo }}
+                  className="inline-flex"
+                >
+                  {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
+                </motion.span>
+              </AnimatePresence>
+            </button>
+          </div>
+        </nav>
+      </div>
 
       <AnimatePresence>
         {open && (
@@ -146,34 +158,51 @@ export function Header() {
             ref={panelRef}
             id="mobile-menu"
             key="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "calc(100dvh - 4.25rem)" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: duration.slow, ease: ease.outExpo }}
-            className="overflow-y-auto border-t border-line bg-bg lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: duration.base, ease: ease.outExpo }}
+            className="fixed inset-0 overflow-y-auto bg-bg/95 backdrop-blur-xl lg:hidden"
           >
-            <div className="container-page flex min-h-full flex-col justify-between gap-10 py-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_at_top,rgb(91_140_255/0.16),transparent_70%)]"
+            />
+            <div className="container-page relative flex min-h-full flex-col justify-between gap-12 pb-10 pt-28">
               <ul className="flex flex-col">
                 {navItems.map((item, i) => (
                   <motion.li
                     key={item.id}
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: duration.slow, ease: ease.outExpo, delay: 0.04 * i }}
+                    transition={{ duration: duration.slow, ease: ease.outExpo, delay: 0.05 + stagger.tight * i }}
                   >
                     <a
                       href={`#${item.id}`}
                       onClick={() => close(false)}
                       aria-current={active === item.id ? "true" : undefined}
-                      className="flex items-baseline justify-between border-b border-line py-4 text-2xl font-medium tracking-[-0.02em] text-fg-muted transition-colors hover:text-fg aria-[current]:text-fg"
+                      className="group flex items-baseline gap-4 border-b border-line py-4 text-[2.5rem] font-semibold leading-none tracking-[-0.04em] text-fg-muted transition-colors hover:text-fg aria-[current]:text-fg"
                     >
-                      {item.label}
-                      <span className="font-mono text-xs text-fg-subtle">0{i + 1}</span>
+                      <span className="w-8 font-mono text-xs font-normal tracking-normal text-fg-subtle">
+                        0{i + 1}
+                      </span>
+                      <span className="transition-transform duration-(--duration-base) ease-(--ease-out-expo) group-hover:translate-x-1">
+                        {item.label}
+                      </span>
                     </a>
                   </motion.li>
                 ))}
               </ul>
-              <div className="flex flex-col gap-5">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: duration.slow, ease: ease.outExpo, delay: 0.25 }}
+                className="flex flex-col gap-6"
+              >
+                <p className="inline-flex items-center gap-2.5 text-sm text-fg-muted">
+                  <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-success" />
+                  {profile.availability.label}
+                </p>
                 <ButtonLink
                   href={profile.resumeUrl}
                   variant="secondary"
@@ -183,10 +212,10 @@ export function Header() {
                   pendingLabel={RESUME_PENDING}
                   className="w-full"
                 >
-                  Download résumé
+                  Download resume
                 </ButtonLink>
                 <SocialLinks className="-ml-2" />
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         )}

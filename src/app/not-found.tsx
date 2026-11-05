@@ -17,7 +17,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="mt-2 inline-flex h-11 items-center gap-2 rounded-control border border-line-strong bg-surface-2 px-5 text-[0.9375rem] font-medium text-fg transition-colors hover:bg-surface-3"
+          className="mt-2 inline-flex h-11 items-center gap-2 rounded-full border border-line-strong bg-surface-2 px-5 text-[0.9375rem] font-medium text-fg transition-colors hover:bg-surface-3"
         >
           <ArrowLeft className="size-4" aria-hidden="true" />
           Back to home

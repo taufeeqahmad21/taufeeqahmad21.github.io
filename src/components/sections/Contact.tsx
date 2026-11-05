@@ -2,7 +2,7 @@ import { ArrowUpRight, Mail } from "lucide-react";
 import { profile } from "@/data/profile";
 import { sections } from "@/data/site";
 import { cn } from "@/lib/utils";
-import { ButtonLink } from "@/components/ui/Button";
+import { ButtonArrow, ButtonLink } from "@/components/ui/Button";
 import { GitHubIcon, LinkedInIcon } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -21,56 +21,101 @@ export function Contact() {
   const mailto = profile.socials.email.href;
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="section-y border-t border-line">
-      <div className="container-page">
+    <section id="contact" aria-labelledby="contact-title" className="relative isolate overflow-hidden border-t border-line">
+      {/* atmosphere: light rising from below the fold */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_70%_60%_at_50%_100%,black_20%,transparent_75%)]" />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-[-24rem] left-1/2 -z-10 h-[44rem] w-[80rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(91_140_255/0.2),rgb(162_142_255/0.08)_55%,transparent)]"
+      />
+
+      <div className="container-page section-y">
         <Reveal>
-          <div className="relative isolate overflow-hidden rounded-panel border border-line-strong bg-surface-1 px-6 py-14 shadow-raised sm:px-12 sm:py-20 lg:px-16">
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid opacity-60" />
-            <div
-              aria-hidden="true"
-              className="absolute -top-40 left-1/2 -z-10 h-80 w-[48rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(91_140_255/0.16),transparent)]"
-            />
+          <p className="flex items-center gap-4 font-mono text-eyebrow uppercase text-fg-subtle">
+            <span className="text-accent-strong">{copy.index}</span>
+            <span>{copy.eyebrow}</span>
+            <span aria-hidden="true" className="rule-fade flex-1" />
+          </p>
+        </Reveal>
 
-            <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-16">
-              <div className="flex flex-col items-start gap-6">
-                <p className="flex items-center gap-3 font-mono text-eyebrow uppercase text-fg-subtle">
-                  <span className="text-accent-strong">{copy.index}</span>
-                  <span aria-hidden="true" className="h-px w-8 bg-line-strong" />
-                  {copy.eyebrow}
-                </p>
-                <h2 id="contact-title" className="max-w-xl text-balance text-title font-semibold text-fg">
-                  {copy.title}{" "}
-                  <span className="font-serif font-normal italic tracking-[-0.01em] text-fg-muted">{copy.accent}</span>
-                </h2>
-                <p className="max-w-lg text-pretty text-lead text-fg-muted">{copy.description}</p>
-                <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-                  <ButtonLink
-                    href={mailto}
-                    size="lg"
-                    icon={<Mail className="size-4" aria-hidden="true" />}
-                    pendingLabel="Email address not added yet"
-                  >
-                    Send an email
-                  </ButtonLink>
-                  <ButtonLink
-                    href={profile.socials.linkedin.href}
-                    size="lg"
-                    variant="secondary"
-                    icon={<LinkedInIcon className="size-4" />}
-                    pendingLabel="LinkedIn link not added yet"
-                  >
-                    Connect on LinkedIn
-                  </ButtonLink>
-                </div>
-              </div>
+        <Reveal delay={0.05}>
+          <h2 id="contact-title" className="mt-10 max-w-[16ch] text-balance text-mega font-semibold text-fg md:mt-14">
+            {copy.title} <span className="text-accent-serif text-gradient pr-[0.06em]">{copy.accent}</span>
+          </h2>
+        </Reveal>
 
-              <ul className="flex flex-col divide-y divide-line rounded-card border border-line bg-bg/40">
+        <div className="mt-14 grid grid-cols-1 gap-14 md:mt-20 lg:grid-cols-12 lg:gap-12">
+          <div className="flex flex-col items-start gap-8 lg:col-span-7">
+            <Reveal delay={0.05}>
+              <p className="max-w-xl text-pretty text-lead text-fg-muted">{copy.description}</p>
+            </Reveal>
+
+            {profile.email && mailto && (
+              <Reveal delay={0.1}>
+                <a
+                  href={mailto}
+                  className="group inline-flex max-w-full items-center gap-3 text-[clamp(1.375rem,0.9rem+2.2vw,2.75rem)] font-medium tracking-[-0.03em] text-fg"
+                >
+                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-1 [overflow-wrap:anywhere] transition-[background-size] duration-(--duration-image) ease-(--ease-out-expo) group-hover:bg-[length:100%_2px]">
+                    {profile.email}
+                  </span>
+                  <ArrowUpRight
+                    className="size-[0.8em] shrink-0 text-fg-muted transition-[transform,color] duration-(--duration-slow) ease-(--ease-out-expo) group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent-strong"
+                    aria-hidden="true"
+                  />
+                </a>
+              </Reveal>
+            )}
+
+            <Reveal delay={0.15} className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <ButtonLink
+                href={mailto}
+                size="lg"
+                icon={<Mail className="size-4" aria-hidden="true" />}
+                trailingIcon={<ButtonArrow />}
+                pendingLabel="Email address not added yet"
+              >
+                Send an email
+              </ButtonLink>
+              <ButtonLink
+                href={profile.socials.linkedin.href}
+                size="lg"
+                variant="secondary"
+                icon={<LinkedInIcon className="size-4" />}
+                pendingLabel="LinkedIn link not added yet"
+              >
+                Connect on LinkedIn
+              </ButtonLink>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.1} className="lg:col-span-4 lg:col-start-9">
+            <div className="flex flex-col gap-5">
+              <p
+                className={cn(
+                  "inline-flex items-start gap-3 rounded-card border p-4 text-sm leading-snug",
+                  profile.availability.isPlaceholder
+                    ? "border-dashed border-line-strong text-fg-subtle"
+                    : "border-[rgb(74_222_128/0.22)] bg-success-soft text-fg",
+                )}
+              >
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "mt-1.5 size-2 shrink-0 rounded-full",
+                    profile.availability.isPlaceholder ? "bg-fg-subtle/60" : "animate-pulse-dot bg-success",
+                  )}
+                />
+                {profile.availability.label}
+              </p>
+
+              <ul className="flex flex-col divide-y divide-line rounded-card border border-line bg-bg/50 backdrop-blur">
                 {channels.map(({ key, Icon, value, fallback }) => {
                   const label = profile.socials[key].label;
                   const href = key === "email" ? mailto : value;
                   const inner = (
                     <>
-                      <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-control border border-line bg-surface-2 text-fg-muted">
+                      <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line bg-surface-2 text-fg-muted transition-colors duration-(--duration-base) group-hover:border-line-accent group-hover:text-accent-strong">
                         <Icon className="size-4" aria-hidden="true" />
                       </span>
                       <span className="flex min-w-0 flex-1 flex-col">
@@ -91,9 +136,10 @@ export function Contact() {
                         >
                           {inner}
                           <ArrowUpRight
-                            className="size-4 text-fg-subtle transition-transform duration-(--duration-base) group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg"
+                            className="size-4 shrink-0 text-fg-subtle transition-transform duration-(--duration-base) group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg"
                             aria-hidden="true"
                           />
+                          {href.startsWith("http") && <span className="sr-only"> (opens in a new tab)</span>}
                         </a>
                       ) : (
                         <div className="flex items-center gap-4 px-5 py-4">{inner}</div>
@@ -103,8 +149,8 @@ export function Contact() {
                 })}
               </ul>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

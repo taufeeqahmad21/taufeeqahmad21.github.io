@@ -12,12 +12,11 @@ export const profile: Profile = {
   initials: "TA",
   title: "Android Developer & Software Engineer",
   secondaryExpertise: "Full-Stack Web Development",
-  positioning:
-    "Product-minded software engineer who builds scalable Android applications and modern web platforms.",
-  headline: "Building thoughtful digital experiences through code.",
-  headlineAccent: "thoughtful",
+  positioning: "Independent product builder who designs, develops and launches real digital products.",
+  headline: "I build digital products that make an impact.",
+  headlineAccents: ["digital products", "impact"],
   intro:
-    "I'm an Android developer and software engineer. I build native apps with Kotlin and Jetpack Compose and web platforms with Next.js and TypeScript, with a focus on clean architecture, performance and the details people notice when they use the product.",
+    "I'm Taufeeq Ahmad, an Android Developer and Software Engineer focused on building useful applications, scalable platforms and thoughtful digital experiences.",
   availability: {
     label: "Open to Android and software engineering opportunities",
     isPlaceholder: false,

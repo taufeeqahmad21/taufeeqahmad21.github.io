@@ -4,11 +4,10 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
-import { Experience } from "@/components/sections/Experience";
-import { GitHub } from "@/components/sections/GitHub";
 import { Hero } from "@/components/sections/Hero";
-import { Projects } from "@/components/sections/Projects";
-import { Skills } from "@/components/sections/Skills";
+import { Journey } from "@/components/sections/Journey";
+import { Technology } from "@/components/sections/Technology";
+import { Work } from "@/components/sections/Work";
 
 /** schema.org Person — only includes links that have been verified. */
 const personJsonLd = {
@@ -32,11 +31,10 @@ export default function HomePage() {
       <Header />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
+        <Work />
         <About />
-        <Skills />
-        <Projects />
-        <Experience />
-        <GitHub />
+        <Technology />
+        <Journey />
         <Contact />
       </main>
       <Footer />

@@ -1,143 +1,115 @@
-import { ArrowDown, ArrowRight } from "lucide-react";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
-import { ButtonLink } from "@/components/ui/Button";
+import { ButtonArrow, ButtonLink } from "@/components/ui/Button";
 import { GitHubIcon, LinkedInIcon } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
+import { AnimatedHeadline } from "@/components/hero/AnimatedHeadline";
 import { HeroVisual } from "@/components/hero/HeroVisual";
-
-function Headline({ text, accent }: { text: string; accent?: string }) {
-  const at = accent ? text.indexOf(accent) : -1;
-  if (!accent || at === -1) return <>{text}</>;
-  return (
-    <>
-      {text.slice(0, at)}
-      <span className="font-serif font-normal italic tracking-[-0.015em] text-gradient">{accent}</span>
-      {text.slice(at + accent.length)}
-    </>
-  );
-}
 
 export function Hero() {
   const { availability, socials } = profile;
+  const profileLinks = [
+    { link: socials.github, Icon: GitHubIcon },
+    { link: socials.linkedin, Icon: LinkedInIcon },
+  ];
 
   return (
     <section id="home" aria-labelledby="hero-title" className="relative isolate overflow-hidden">
-      {/* background: engineering grid + a single, restrained light source */}
+      {/* atmosphere: engineering grid, a cool key light and a violet fill */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid" />
       <div
         aria-hidden="true"
-        className="absolute left-1/2 top-[-18rem] -z-10 h-[36rem] w-[64rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(91_140_255/0.14),rgb(160_140_255/0.05)_55%,transparent)]"
+        className="absolute -left-40 top-[-20rem] -z-10 h-[44rem] w-[64rem] rounded-full bg-[radial-gradient(closest-side,rgb(91_140_255/0.16),transparent)]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -right-40 bottom-[-12rem] -z-10 h-[36rem] w-[48rem] rounded-full bg-[radial-gradient(closest-side,rgb(162_142_255/0.09),transparent)]"
       />
 
-      <div className="container-page grid min-h-[100svh] items-center gap-16 pb-24 pt-32 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pb-20 lg:pt-28">
-        <div className="flex flex-col items-start">
-          <Reveal onMount>
-            <p
-              className={cn(
-                "inline-flex items-center gap-2.5 rounded-full border px-3 py-1.5 text-xs",
-                availability.isPlaceholder
-                  ? "border-dashed border-line-strong text-fg-subtle"
-                  : "border-line bg-surface-1/80 text-fg-muted",
-              )}
-            >
-              <span
-                aria-hidden="true"
-                className={cn(
-                  "size-2 rounded-full",
-                  availability.isPlaceholder ? "bg-fg-subtle/60" : "animate-pulse-dot bg-success",
-                )}
-              />
-              {availability.label}
-            </p>
-          </Reveal>
-
-          <Reveal onMount delay={0.05}>
-            <p className="mt-8 font-mono text-sm text-fg-subtle">
-              <span className="text-accent-strong">{profile.name}</span>
-              <span aria-hidden="true"> / </span>
-              <span className="sr-only">, </span>
-              {profile.title}
-            </p>
-          </Reveal>
-
-          <Reveal onMount delay={0.1}>
-            <h1
-              id="hero-title"
-              className="mt-5 max-w-[14ch] text-balance text-display font-semibold text-fg"
-            >
-              <Headline text={profile.headline} accent={profile.headlineAccent} />
-            </h1>
-          </Reveal>
-
-          <Reveal onMount delay={0.15}>
-            <p className="mt-7 max-w-xl text-pretty text-lead text-fg-muted">{profile.intro}</p>
-          </Reveal>
-
-          <Reveal onMount delay={0.2} className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-            <ButtonLink
-              href="#projects"
-              size="lg"
-              trailingIcon={
-                <ArrowRight
-                  className="size-4 transition-transform duration-(--duration-base) group-hover/button:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              }
-            >
-              View Projects
-            </ButtonLink>
-            <ButtonLink href="#contact" size="lg" variant="secondary">
-              Contact Me
-            </ButtonLink>
-          </Reveal>
-
-          <Reveal onMount delay={0.25} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-            {[
-              { link: socials.github, Icon: GitHubIcon },
-              { link: socials.linkedin, Icon: LinkedInIcon },
-            ].map(({ link, Icon }) =>
-              link.href ? (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-control text-sm text-fg-muted transition-colors duration-(--duration-base) hover:text-fg"
-                >
-                  <Icon className="size-4" />
-                  {link.label}
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              ) : (
-                <span
-                  key={link.label}
-                  className="inline-flex items-center gap-2 text-sm text-fg-subtle"
-                  title={`${link.label} profile link coming soon`}
-                >
-                  <Icon className="size-4 opacity-60" />
-                  {link.label}
-                  <span className="rounded-full border border-dashed border-line-strong px-2 py-0.5 font-mono text-[0.625rem]">
-                    link pending
-                  </span>
-                </span>
-              ),
+      <div className="container-page flex min-h-[100svh] flex-col justify-center pb-20 pt-32 sm:pt-36 lg:pb-24 lg:pt-40">
+        <Reveal onMount className="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <p
+            className={cn(
+              "inline-flex items-center gap-2.5 rounded-full border px-3.5 py-1.5 text-xs sm:text-[0.8125rem]",
+              availability.isPlaceholder
+                ? "border-dashed border-line-strong text-fg-subtle"
+                : "border-line bg-surface-1/80 text-fg-muted",
             )}
+          >
+            <span
+              aria-hidden="true"
+              className={cn(
+                "size-2 shrink-0 rounded-full",
+                availability.isPlaceholder ? "bg-fg-subtle/60" : "animate-pulse-dot bg-success",
+              )}
+            />
+            {availability.label}
+          </p>
+          <p className="font-mono text-xs text-fg-subtle">
+            <span className="text-fg-muted">{profile.name}</span>
+            <span aria-hidden="true"> — </span>
+            <span className="sr-only">, </span>
+            {profile.title}
+          </p>
+        </Reveal>
+
+        <h1
+          id="hero-title"
+          className="mt-8 max-w-[15ch] text-balance text-display font-semibold text-fg sm:mt-10"
+        >
+          <AnimatedHeadline text={profile.headline} accents={profile.headlineAccents} />
+        </h1>
+
+        <div className="mt-12 grid grid-cols-1 items-end gap-14 lg:mt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
+          <div className="flex flex-col items-start">
+            <Reveal onMount delay={0.45}>
+              <p className="max-w-xl text-pretty text-lead text-fg-muted">{profile.intro}</p>
+            </Reveal>
+
+            <Reveal onMount delay={0.55} className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <ButtonLink href="#work" size="lg" trailingIcon={<ButtonArrow />}>
+                View Selected Work
+              </ButtonLink>
+              <ButtonLink href="#contact" size="lg" variant="secondary">
+                Contact Me
+              </ButtonLink>
+            </Reveal>
+
+            <Reveal onMount delay={0.65} className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-3">
+              {profileLinks.map(({ link, Icon }) =>
+                link.href ? (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex min-h-11 items-center gap-2.5 rounded-control text-sm text-fg-muted transition-colors duration-(--duration-base) hover:text-fg"
+                  >
+                    <Icon className="size-4" />
+                    <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-0.5 transition-[background-size] duration-(--duration-slow) ease-(--ease-out-expo) group-hover:bg-[length:100%_1px]">
+                      {link.label}
+                    </span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ) : (
+                  <span
+                    key={link.label}
+                    className="inline-flex items-center gap-2 text-sm text-fg-subtle"
+                    title={`${link.label} profile link coming soon`}
+                  >
+                    <Icon className="size-4 opacity-60" />
+                    {link.label} (link pending)
+                  </span>
+                ),
+              )}
+            </Reveal>
+          </div>
+
+          <Reveal onMount delay={0.5} className="pt-6 sm:pt-12 lg:pt-0">
+            <HeroVisual />
           </Reveal>
         </div>
-
-        <Reveal onMount delay={0.2} className="pb-10 lg:pb-0">
-          <HeroVisual />
-        </Reveal>
       </div>
-
-      <a
-        href="#about"
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-fg-subtle transition-colors hover:text-fg lg:inline-flex"
-      >
-        <ArrowDown className="size-3.5" aria-hidden="true" />
-        Scroll
-      </a>
     </section>
   );
 }

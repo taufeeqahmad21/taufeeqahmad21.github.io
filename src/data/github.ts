@@ -3,20 +3,21 @@ import { profile } from "./profile";
 
 /**
  * Selected repositories. Only list repositories that exist and are public.
+ * - `name`: shown as the project name until the real public repository name is known.
  * - `href`: the repository URL (null until public).
  * - `language`: the primary language shown on GitHub — leave null until verified.
  * No stars, forks or contribution numbers are shown on purpose.
  */
 export const repositories: Repository[] = [
   {
-    name: "kalyvor",
+    name: "Kalyvor",
     description:
       "Tools-first productivity platform bringing digital utilities and AI-powered workflows into one place.",
     language: null,
     href: null,
   },
   {
-    name: "invoiceflow",
+    name: "InvoiceFlow",
     description:
       "Android app for creating and managing invoices, estimates and receipts for freelancers and small businesses.",
     language: null,

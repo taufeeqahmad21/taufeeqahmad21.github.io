@@ -7,9 +7,9 @@ import { profile } from "@/data/profile";
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
 export const siteMeta = {
-  title: `${profile.name} — ${profile.title}`,
+  title: `${profile.name} | ${profile.title}`,
   shortTitle: profile.name,
-  description: `${profile.name} is an Android developer and software engineer building scalable Android apps with Kotlin and Jetpack Compose, and modern web platforms with Next.js and TypeScript.`,
+  description: `Portfolio of ${profile.name}, an Android developer and software engineer building apps with Kotlin and Jetpack Compose and web platforms with Next.js and TypeScript.`,
   keywords: [
     "Taufeeq Ahmad",
     "Android Developer",
@@ -27,5 +27,5 @@ export const ogImage = {
   url: "og-image.png",
   width: 1200,
   height: 630,
-  alt: `${profile.name} — ${profile.title}`,
+  alt: `${profile.name} | ${profile.title}`,
 };

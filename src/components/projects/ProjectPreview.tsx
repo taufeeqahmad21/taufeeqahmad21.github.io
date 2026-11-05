@@ -1,10 +1,13 @@
-import Image from "next/image";
-import type { Project, ProjectPreview as PreviewData } from "@/types/content";
+import type { ReactNode } from "react";
+import Image, { type StaticImageData } from "next/image";
+import { Camera } from "lucide-react";
+import type { Project, ProjectPreview as PreviewData, ProjectScreenshot } from "@/types/content";
 import { cn } from "@/lib/utils";
 
 /**
- * Project visual. Uses the real screenshot when one is provided; otherwise draws a
- * neutral, clearly-labelled illustration so the layout never has a missing image.
+ * Project visual. Real screenshots (website or store listing) are shown in a frame with a
+ * "Screenshot" caption; otherwise a code-drawn illustration is shown and labelled as a mockup,
+ * so the two can never be confused.
  */
 export function ProjectPreview({ project, className }: { project: Project; className?: string }) {
   const { preview } = project;
@@ -25,23 +28,73 @@ export function ProjectPreview({ project, className }: { project: Project; class
             : "bg-[radial-gradient(ellipse_at_bottom,rgb(91_140_255/0.18),transparent_70%)]",
         )}
       />
-      {preview.kind === "image" ? (
-        <Image
-          src={preview.src}
-          alt={preview.alt}
-          fill
-          sizes="(min-width: 1024px) 560px, 100vw"
-          className="object-cover"
-        />
-      ) : (
+      {preview.kind === "image" && (
+        <>
+          <BrowserScreenshot src={preview.src} alt={preview.alt} />
+          <PreviewCaption real>{preview.caption}</PreviewCaption>
+        </>
+      )}
+      {preview.kind === "screenshots" && (
+        <>
+          <PhoneScreenshots images={preview.images} />
+          <PreviewCaption real>{preview.caption}</PreviewCaption>
+        </>
+      )}
+      {preview.kind === "mockup" && (
         <>
           <Mockup variant={preview.variant} name={project.name} />
-          <span className="absolute bottom-3 right-3 rounded-full border border-line bg-bg/70 px-2 py-0.5 font-mono text-[0.625rem] text-fg-subtle backdrop-blur">
-            Illustrative preview
-          </span>
+          <PreviewCaption>Illustrative mockup · not a screenshot</PreviewCaption>
         </>
       )}
     </div>
+  );
+}
+
+function PreviewCaption({ children, real = false }: { children: ReactNode; real?: boolean }) {
+  return (
+    <span
+      className={cn(
+        "absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full border bg-bg/80 px-2 py-0.5 font-mono text-[0.625rem] backdrop-blur",
+        real ? "border-line-strong text-fg" : "border-line text-fg-muted",
+      )}
+    >
+      {real && <Camera className="size-3" aria-hidden="true" />}
+      {children}
+    </span>
+  );
+}
+
+/* Website screenshot inside a minimal browser frame, matching the mockup composition. */
+function BrowserScreenshot({ src, alt }: { src: StaticImageData; alt: string }) {
+  return (
+    <div className="w-[88%] translate-y-5 overflow-hidden rounded-xl border border-line-strong bg-surface-1 shadow-raised">
+      <div aria-hidden="true" className="flex items-center gap-1 border-b border-line px-3 py-2">
+        <span className="size-1.5 rounded-full bg-surface-4" />
+        <span className="size-1.5 rounded-full bg-surface-4" />
+        <span className="size-1.5 rounded-full bg-surface-4" />
+      </div>
+      <Image src={src} alt={alt} sizes="(min-width: 1024px) 520px, 90vw" className="h-auto w-full" />
+    </div>
+  );
+}
+
+/* Store screenshots side by side; the middle one is lifted. Two on phones, three from sm up. */
+function PhoneScreenshots({ images }: { images: ProjectScreenshot[] }) {
+  return (
+    <ul className="flex w-full items-center justify-center gap-3 px-4 sm:gap-4">
+      {images.slice(0, 3).map((image, i) => (
+        <li
+          key={image.alt}
+          className={cn(
+            "relative aspect-[3/4] w-[42%] overflow-hidden rounded-xl border border-line-strong bg-surface-1 shadow-raised sm:w-[29%]",
+            i === 1 && "sm:-translate-y-3",
+            i === 2 && "hidden sm:block",
+          )}
+        >
+          <Image src={image.src} alt={image.alt} fill sizes="(min-width: 640px) 180px, 42vw" className="object-cover" />
+        </li>
+      ))}
+    </ul>
   );
 }
 

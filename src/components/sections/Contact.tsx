@@ -31,7 +31,7 @@ export function Contact() {
               className="absolute -top-40 left-1/2 -z-10 h-80 w-[48rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(91_140_255/0.16),transparent)]"
             />
 
-            <div className="grid gap-14 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-16">
+            <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-16">
               <div className="flex flex-col items-start gap-6">
                 <p className="flex items-center gap-3 font-mono text-eyebrow uppercase text-fg-subtle">
                   <span className="text-accent-strong">{copy.index}</span>
@@ -75,7 +75,7 @@ export function Contact() {
                       </span>
                       <span className="flex min-w-0 flex-1 flex-col">
                         <span className="text-xs text-fg-subtle">{label}</span>
-                        <span className={cn("truncate text-sm", value ? "text-fg" : "text-fg-subtle")}>
+                        <span className={cn("text-sm [overflow-wrap:anywhere]", value ? "text-fg" : "text-fg-subtle")}>
                           {value ? displayValue(value) : fallback}
                         </span>
                       </span>

@@ -1,5 +1,5 @@
 import { profile } from "@/data/profile";
-import { siteMeta, siteUrl } from "@/lib/site";
+import { siteUrl } from "@/lib/site";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { About } from "@/components/sections/About";
@@ -16,7 +16,7 @@ const personJsonLd = {
   "@type": "Person",
   name: profile.name,
   jobTitle: profile.title,
-  description: siteMeta.description,
+  description: profile.positioning,
   url: `${siteUrl}/`,
   knowsAbout: ["Android", "Kotlin", "Jetpack Compose", "Next.js", "React", "TypeScript"],
   sameAs: [profile.socials.github.href, profile.socials.linkedin.href].filter(Boolean),

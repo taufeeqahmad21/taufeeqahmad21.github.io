@@ -1,13 +1,14 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export type BadgeVariant = "default" | "accent" | "violet" | "outline" | "pending";
+export type BadgeVariant = "default" | "accent" | "violet" | "outline" | "success" | "pending";
 
 const variants: Record<BadgeVariant, string> = {
   default: "border-line bg-surface-2 text-fg-muted",
   accent: "border-line-accent bg-accent-soft text-accent-strong",
   violet: "border-[rgb(160_140_255/0.3)] bg-violet-soft text-violet",
   outline: "border-line-strong bg-transparent text-fg-muted",
+  success: "border-[rgb(74_222_128/0.28)] bg-[rgb(74_222_128/0.08)] text-success",
   pending: "border-dashed border-line-strong bg-transparent text-fg-subtle",
 };
 

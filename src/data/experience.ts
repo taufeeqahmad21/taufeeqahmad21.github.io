@@ -1,9 +1,8 @@
 import type { ExperienceEntry } from "@/types/content";
 
 /**
- * Experience timeline, newest first.
- * Entries with `isPlaceholder: true` are templates. Replace their text with your real
- * role, organisation and dates, then set `isPlaceholder: false` (or delete them).
+ * Experience timeline, newest first. Only add roles you can verify.
+ * `isPlaceholder: true` renders an entry as a dashed "To be added" template.
  */
 export const experience: ExperienceEntry[] = [
   {
@@ -19,16 +18,5 @@ export const experience: ExperienceEntry[] = [
     ],
     technologies: ["Kotlin", "Jetpack Compose", "Next.js", "TypeScript", "Tailwind CSS"],
     isPlaceholder: false,
-  },
-  {
-    id: "placeholder-role-1",
-    role: "Role title",
-    organization: "Company name",
-    period: "Start — End",
-    summary:
-      "Add a professional role here: what you were responsible for, what you built and the outcome you can verify.",
-    highlights: ["Key responsibility or result.", "Another responsibility or result."],
-    technologies: ["Technology"],
-    isPlaceholder: true,
   },
 ];

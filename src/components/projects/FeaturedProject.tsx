@@ -1,9 +1,11 @@
+import Image from "next/image";
 import type { Project } from "@/types/content";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { ProjectLinks, projectAvailabilityNote } from "./ProjectLinks";
 import { ProjectPreview } from "./ProjectPreview";
+import { ProjectStatusBadge } from "./ProjectStatus";
 
 type FeaturedProjectProps = {
   project: Project;
@@ -32,12 +34,24 @@ export function FeaturedProject({ project, index }: FeaturedProjectProps) {
         <div className={cn("flex flex-col gap-6 px-3 pb-5 sm:px-4 lg:py-6", reversed ? "lg:pl-10" : "lg:pr-10")}>
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant={project.platform === "android" ? "violet" : "accent"}>{project.category}</Badge>
+            <ProjectStatusBadge project={project} />
             <span className="font-mono text-xs text-fg-subtle">{String(index + 1).padStart(2, "0")}</span>
           </div>
           <div className="flex flex-col gap-3">
-            <h3 id={titleId} className="text-title font-semibold text-fg">
-              {project.name}
-            </h3>
+            <div className="flex items-center gap-4">
+              {project.icon && (
+                <Image
+                  src={project.icon}
+                  alt=""
+                  width={56}
+                  height={56}
+                  className="size-12 shrink-0 rounded-[0.875rem] border border-line-strong sm:size-14"
+                />
+              )}
+              <h3 id={titleId} className="text-title font-semibold text-fg">
+                {project.name}
+              </h3>
+            </div>
             <p className="max-w-md text-pretty text-[1.0625rem] leading-relaxed text-fg-muted">
               {project.description}
             </p>

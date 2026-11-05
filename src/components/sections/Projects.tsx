@@ -2,6 +2,7 @@ import { ArrowUpRight, Plus } from "lucide-react";
 import { additionalProjects, featuredProjects } from "@/data/projects";
 import { githubProfile } from "@/data/github";
 import { sections } from "@/data/site";
+import { cn } from "@/lib/utils";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Reveal } from "@/components/ui/Reveal";
@@ -9,7 +10,27 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FeaturedProject } from "@/components/projects/FeaturedProject";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 
+// Static class lookups so Tailwind can see every class name.
+const mdSpan = { 1: "md:col-span-1", 2: "md:col-span-2" } as const;
+const lgSpan = { 1: "lg:col-span-1", 2: "lg:col-span-2", 3: "lg:col-span-3" } as const;
+const mdLayout = { 1: "md:flex-col md:items-start", 2: "md:flex-row md:items-center" } as const;
+const lgLayout = { 1: "lg:flex-col lg:items-start", 2: "lg:flex-row lg:items-center", 3: "lg:flex-row lg:items-center" } as const;
+
+/**
+ * The "More Android projects" card fills the rest of the last grid row (2 columns on md,
+ * 3 on lg) and only switches to a horizontal layout when it is wide enough.
+ */
+function placeholderLayout(count: number) {
+  const md = count % 2 === 0 ? 2 : 1;
+  const lg = (3 - (count % 3)) as 1 | 2 | 3;
+  return {
+    cell: cn("h-full", mdSpan[md], lgSpan[lg]),
+    card: cn("sm:flex-row sm:items-center", mdLayout[md], lgLayout[lg]),
+  };
+}
+
 export function Projects() {
+  const placeholder = placeholderLayout(additionalProjects.length);
   return (
     <section id="projects" aria-labelledby="projects-title" className="section-y border-t border-line">
       <div className="container-page">
@@ -27,13 +48,10 @@ export function Projects() {
               <ProjectCard project={project} />
             </Reveal>
           ))}
-          <Reveal
-            as="li"
-            className={additionalProjects.length === 0 ? "md:col-span-2 lg:col-span-3" : "h-full"}
-          >
+          <Reveal as="li" className={placeholder.cell}>
             <Card
               variant="placeholder"
-              className="flex h-full flex-col items-start justify-between gap-6 p-6 sm:flex-row sm:items-center sm:p-8"
+              className={cn("flex h-full flex-col items-start justify-between gap-6 p-6 sm:p-8", placeholder.card)}
             >
               <div className="flex items-start gap-4">
                 <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-control border border-line-strong text-fg-muted">

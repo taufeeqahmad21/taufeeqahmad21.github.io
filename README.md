@@ -46,10 +46,10 @@ shows an honest "pending" state instead of a broken link) or explicitly flagged 
 | GitHub profile URL | `src/data/profile.ts` → `socials.github.href` | ✅ Set |
 | LinkedIn URL | `src/data/profile.ts` → `socials.linkedin.href` | ✅ Set |
 | Résumé PDF | add `public/resume.pdf`, then set `resumeUrl: "/resume.pdf"` | `null`: Résumé button is disabled |
-| Project live/source links | `src/data/projects.ts` → `links` | `null` for Kalyvor and InvoiceFlow ("Not yet public") |
-| Project screenshots | `src/data/projects.ts` → `preview` | Code-drawn illustrations labelled "Illustrative preview" |
-| Experience | `src/data/experience.ts` | One entry for your own products and one placeholder role marked "To be added" |
-| Repositories | `src/data/github.ts` | Repo names are guesses (`kalyvor`, `invoiceflow`), with no links or languages |
+| Project live/source links | `src/data/projects.ts` → `links` | ✅ WA Toolbox (Google Play) and Kalyvor (kalyvor.com) set; InvoiceFlow pending (in development); no public source repos |
+| Project screenshots | `src/data/projects.ts` → `preview` | ✅ Real screenshots for WA Toolbox and Kalyvor; InvoiceFlow uses a labelled mockup |
+| Experience | `src/data/experience.ts` | ✅ Independent product development only; add verified roles as needed |
+| Repositories | `src/data/github.ts` | Shown by project name, marked "Not yet public"; add real repo name, `href` and `language` once public |
 
 Search the codebase for `PLACEHOLDER`, `null` links and `isPlaceholder: true` to find what is still pending.
 
@@ -58,21 +58,33 @@ Search the codebase for `PLACEHOLDER`, `null` links and `isPlaceholder: true` to
 Add an object to `src/data/projects.ts`:
 
 ```ts
-import myAppShot from "@/assets/projects/my-app.png"; // optional screenshot
+import myAppShot from "@/assets/projects/my-app.webp"; // optional screenshot
+import myAppIcon from "@/assets/projects/my-app-icon.png"; // optional icon
 
 {
   slug: "my-app",
   name: "My App",
   category: "Android Application",
   platform: "android",
+  status: "published", // "published" | "live" | "in-development"
   description: "One or two sentences on what it does and who it's for.",
   technologies: ["Kotlin", "Jetpack Compose", "Room"],
+  icon: myAppIcon,
   links: { live: "https://play.google.com/store/apps/details?id=…", source: null },
-  preview: { kind: "image", src: myAppShot, alt: "My App home screen" },
-  // or, without a screenshot: preview: { kind: "mockup", variant: "android-generic" },
+  preview: {
+    kind: "screenshots",
+    caption: "Screenshots · Google Play",
+    images: [{ src: myAppShot, alt: "My App home screen" }],
+  },
+  // website: preview: { kind: "image", src, alt, caption: "Screenshot · example.com" }
+  // no screenshots yet: preview: { kind: "mockup", variant: "android-generic" }
   featured: false, // true = large showcase row, false = card in the grid
 }
 ```
+
+The button follows `status`: an Android app that is `published` gets **Google Play**, a `live`
+website gets **Visit Website**, and `in-development` shows a disabled **In Development** state.
+**Source Code** only appears when `links.source` is set.
 
 Import screenshots statically (as above) rather than as string paths. Static imports get the
 GitHub Pages base path added automatically.

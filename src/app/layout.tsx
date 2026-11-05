@@ -17,7 +17,7 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   // Trailing slash keeps the GitHub Pages sub-path when resolving relative URLs.
   metadataBase: new URL(`${siteUrl}/`),
-  title: { default: siteMeta.title, template: `%s — ${profile.name}` },
+  title: { default: siteMeta.title, template: `%s | ${profile.name}` },
   description: siteMeta.description,
   keywords: siteMeta.keywords,
   authors: [{ name: profile.name }],

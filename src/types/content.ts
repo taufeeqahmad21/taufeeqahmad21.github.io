@@ -59,20 +59,35 @@ export type SkillCategory = {
   skills: string[];
 };
 
+export type ProjectScreenshot = { src: StaticImageData; alt: string };
+
 export type ProjectPreview =
-  /** A real screenshot. Import it statically so basePath is handled for you. */
-  | { kind: "image"; src: StaticImageData; alt: string }
+  /** A real website screenshot, shown in a browser frame. Import it statically so basePath is handled for you. */
+  | { kind: "image"; src: StaticImageData; alt: string; caption: string }
+  /** Real app screenshots (e.g. from the store listing), shown side by side. */
+  | { kind: "screenshots"; images: ProjectScreenshot[]; caption: string }
   /** A built-in, code-drawn illustration used until real screenshots exist. */
   | { kind: "mockup"; variant: "web-tools" | "android-invoice" | "android-generic" };
+
+/**
+ * - `published`: released on a store (Android → "Google Play" button).
+ * - `live`: publicly available website ("Visit Website" button).
+ * - `in-development`: not public yet ("In Development" state, no links).
+ */
+export type ProjectStatus = "published" | "live" | "in-development";
 
 export type Project = {
   slug: string;
   name: string;
   category: string;
   platform: "web" | "android";
+  status: ProjectStatus;
   description: string;
   technologies: string[];
+  /** Real app or site icon, if available. */
+  icon?: StaticImageData;
   links: {
+    /** Store listing or website URL. Only set when verified and public. */
     live: string | null;
     source: string | null;
   };

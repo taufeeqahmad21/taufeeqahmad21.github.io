@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="g" cx="30%" cy="0%" r="80%">
+      <stop offset="0" stop-color="#5b8cff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#5b8cff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#0f141f"/>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="none" stroke="#94a3b8" stroke-opacity=".25" stroke-width="1.5"/>
+  <text x="32" y="41" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" font-weight="700" fill="#e9edf4" letter-spacing="-1">TA</text>
+</svg>

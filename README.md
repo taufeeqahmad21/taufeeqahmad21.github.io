@@ -48,7 +48,8 @@ shows an honest "pending" state instead of a broken link) or explicitly flagged 
 | Résumé PDF | add `public/resume.pdf`, then set `resumeUrl: "/resume.pdf"` | `null`: Résumé button is disabled |
 | Project live/source links | `src/data/projects.ts` → `links` | ✅ WA Toolbox (Google Play) and Kalyvor (kalyvor.com) set; InvoiceFlow pending (in development); no public source repos |
 | Project screenshots | `src/data/projects.ts` → `preview` | ✅ Real screenshots for WA Toolbox and Kalyvor; InvoiceFlow uses a labelled mockup |
-| Product journey | `src/data/journey.ts` | ✅ Independent product work (WA Toolbox, Kalyvor, InvoiceFlow), labelled as not employment; no dates or employers |
+| Professional experience | `src/data/experience.ts` | ✅ Senior Android Developer at My Taxi Ride (MTR), February 2021 – Present, with confirmed responsibilities and stack |
+| Product journey | `src/data/journey.ts` | ✅ Independent product work (WA Toolbox, Kalyvor, InvoiceFlow), shown separately from employment; no dates or metrics |
 
 Search the codebase for `PLACEHOLDER`, `null` links and `isPlaceholder: true` to find what is still pending.
 
@@ -108,13 +109,14 @@ src/
   assets/projects/        Real screenshots and icons (imported statically)
   components/
     layout/               Header (floating nav + mobile menu), Footer, Logo, MotionProvider, CurrentYear
-    sections/             Hero, Work, About, Technology, Journey, Contact (in page order)
+    sections/             Hero, Work, About, Technology, Experience, Contact (in page order)
+    experience/           EmploymentCard (professional roles)
     projects/             ProjectShowcase (released), ProjectInDevelopment, ProjectMedia
                           (screenshot gallery, browser frame, labelled mockups), ProjectLinks, ProjectStatus
     hero/                 AnimatedHeadline (word-by-word entrance), HeroVisual (product console)
     ui/                   Button (+ ButtonArrow), Badge, SectionHeading, Reveal, SocialLinks, Icons
   data/                   All copy and links: profile, site (nav, section copy, About),
-                          skills, projects, journey
+                          skills, projects, experience (employment), journey (independent products)
   lib/                    utils (cn, withBasePath, initials), site (URL + SEO), motion tokens
   types/content.ts        Types for all content
 ```

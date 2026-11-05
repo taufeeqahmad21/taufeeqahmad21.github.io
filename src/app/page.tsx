@@ -1,15 +1,19 @@
+import { employment } from "@/data/experience";
 import { profile } from "@/data/profile";
 import { siteUrl } from "@/lib/site";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
+import { Experience } from "@/components/sections/Experience";
 import { Hero } from "@/components/sections/Hero";
-import { Journey } from "@/components/sections/Journey";
 import { Technology } from "@/components/sections/Technology";
 import { Work } from "@/components/sections/Work";
 
-/** schema.org Person — only includes links that have been verified. */
+const currentRole = employment.find((entry) => entry.endDate === null);
+const companyWebsite = currentRole?.links.find((link) => link.kind === "website")?.href;
+
+/** schema.org Person — only verified facts: profile links and the confirmed current employer. */
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -19,6 +23,13 @@ const personJsonLd = {
   url: `${siteUrl}/`,
   knowsAbout: ["Android", "Kotlin", "Jetpack Compose", "Next.js", "React", "TypeScript"],
   sameAs: [profile.socials.github.href, profile.socials.linkedin.href].filter(Boolean),
+  ...(currentRole && {
+    worksFor: {
+      "@type": "Organization",
+      name: currentRole.company,
+      ...(companyWebsite && { url: companyWebsite }),
+    },
+  }),
 };
 
 export default function HomePage() {
@@ -34,7 +45,7 @@ export default function HomePage() {
         <Work />
         <About />
         <Technology />
-        <Journey />
+        <Experience />
         <Contact />
       </main>
       <Footer />

@@ -108,3 +108,23 @@ export type JourneyEntry = {
   role: string;
   summary: string;
 };
+
+/** A professional employment entry. Only verified facts: no metrics, team sizes or clients. */
+export type EmploymentEntry = {
+  id: string;
+  company: string;
+  role: string;
+  /** Displayed start, e.g. "February 2021". */
+  startLabel: string;
+  /** ISO start date (YYYY-MM), used for <time> and structured data. */
+  startDate: string;
+  /** Displayed end, e.g. "March 2024"; null while current (shown as "Present"). */
+  endLabel: string | null;
+  /** ISO end date (YYYY-MM), or null while current. */
+  endDate: string | null;
+  employmentType: string;
+  summary: string;
+  responsibilities: string[];
+  technologies: string[];
+  links: { label: string; href: string; kind: "website" | "google-play" }[];
+};

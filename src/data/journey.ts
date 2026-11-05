@@ -2,11 +2,11 @@ import type { JourneyEntry } from "@/types/content";
 
 /**
  * Independent product journey, in the same order as the Work section.
- * This is my own product work, not employment: no employers, dates, team sizes or metrics.
+ * This is my own product work, kept separate from employment (src/data/experience.ts):
+ * no dates, team sizes or metrics.
  * Status, platform, icon and links are read from the project in src/data/projects.ts.
  */
 export const journeyIntro = {
-  label: "Independent product development",
   period: "Ongoing",
   summary:
     "Designing and building my own products end to end, for Android and for the web.",

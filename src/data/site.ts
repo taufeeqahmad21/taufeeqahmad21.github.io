@@ -33,11 +33,11 @@ export const sections = {
   },
   experience: {
     index: "04",
-    eyebrow: "Product Journey",
-    title: "Independent product",
-    accent: "development.",
+    eyebrow: "Experience",
+    title: "Where I've been",
+    accent: "building.",
     description:
-      "This is my own product work: projects I've taken from idea to release myself. It's separate from conventional employment history.",
+      "Professional Android development at My Taxi Ride since 2021, alongside the products I design and ship independently.",
   },
   contact: {
     index: "05",

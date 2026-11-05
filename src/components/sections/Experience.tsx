@@ -1,29 +1,52 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import { employment } from "@/data/experience";
 import { journey, journeyIntro } from "@/data/journey";
 import { getProject } from "@/data/projects";
-import { profile } from "@/data/profile";
 import { sections } from "@/data/site";
 import { cn, initials } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
-import { LinkedInIcon } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectStatusBadge } from "@/components/projects/ProjectStatus";
+import { EmploymentCard } from "@/components/experience/EmploymentCard";
+
+/** Small labelled divider that introduces each part of the section. */
+function PartHeading({ index, children }: { index: string; children: string }) {
+  return (
+    <Reveal>
+      <h3 className="flex items-center gap-4 font-mono text-eyebrow uppercase text-fg-subtle">
+        <span className="text-fg-muted">{index}</span>
+        <span>{children}</span>
+        <span aria-hidden="true" className="rule-fade flex-1" />
+      </h3>
+    </Reveal>
+  );
+}
 
 /**
- * Independent product journey. Deliberately labelled as independent work so it can't be
- * read as employment: no employers, dates, team sizes or metrics.
+ * Experience: (A) professional employment, then (B) independent product development,
+ * clearly separated so personal products can't be read as employment.
  */
-export function Journey() {
-  const linkedin = profile.socials.linkedin.href;
-
+export function Experience() {
   return (
     <section id="experience" aria-labelledby="experience-title" className="section-y border-t border-line">
       <div className="container-page">
         <SectionHeading id="experience-title" copy={sections.experience} split />
 
-        <div className="mt-14 grid grid-cols-1 gap-12 md:mt-20 lg:grid-cols-12 lg:gap-12">
+        {/* A — professional employment */}
+        <div className="mt-14 flex flex-col gap-8 md:mt-20">
+          <PartHeading index="A">Professional experience</PartHeading>
+          {employment.map((entry) => (
+            <EmploymentCard key={entry.id} entry={entry} />
+          ))}
+        </div>
+
+        {/* B — independent products, kept visibly separate from employment */}
+        <div className="mt-20 md:mt-28">
+          <PartHeading index="B">Independent product development</PartHeading>
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12">
           {/* overview */}
           <Reveal className="lg:col-span-4">
             <div className="surface-card flex flex-col gap-6 p-6 sm:p-8 lg:sticky lg:top-28">
@@ -33,10 +56,7 @@ export function Journey() {
                   {journeyIntro.period}
                 </Badge>
               </div>
-              <div className="flex flex-col gap-3">
-                <h3 className="text-heading font-semibold text-fg">{journeyIntro.label}</h3>
-                <p className="text-[0.9375rem] leading-relaxed text-fg-muted">{journeyIntro.summary}</p>
-              </div>
+              <p className="text-[1.0625rem] leading-relaxed text-fg">{journeyIntro.summary}</p>
               <ul className="flex flex-col gap-3">
                 {journeyIntro.highlights.map((highlight) => (
                   <li key={highlight} className="flex gap-3 text-sm leading-relaxed text-fg-muted">
@@ -46,23 +66,7 @@ export function Journey() {
                 ))}
               </ul>
               <p className="border-t border-line pt-5 text-sm leading-relaxed text-fg-subtle">
-                Not employment history.{" "}
-                {linkedin ? (
-                  <>
-                    For professional background, see my{" "}
-                    <a
-                      href={linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-fg-muted underline decoration-line-strong underline-offset-4 transition-colors hover:text-fg hover:decoration-fg-muted"
-                    >
-                      <LinkedInIcon className="size-3.5" />
-                      LinkedIn profile
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    </a>
-                    .
-                  </>
-                ) : null}
+                My own products, built independently and separate from my employment at My Taxi Ride.
               </p>
             </div>
           </Reveal>
@@ -100,9 +104,9 @@ export function Journey() {
                   >
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex flex-col gap-1.5">
-                        <h3 className={cn("text-heading font-semibold", released ? "text-fg" : "text-fg-muted")}>
+                        <h4 className={cn("text-heading font-semibold", released ? "text-fg" : "text-fg-muted")}>
                           {project.name}
-                        </h3>
+                        </h4>
                         <p className="font-mono text-xs text-fg-subtle">{entry.role}</p>
                       </div>
                       <ProjectStatusBadge project={project} />

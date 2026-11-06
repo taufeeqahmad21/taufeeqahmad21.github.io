@@ -22,8 +22,8 @@ export const profile: Profile = {
     isPlaceholder: false,
   },
   email,
-  // PLACEHOLDER — put the PDF in /public (e.g. /public/resume.pdf) and set "/resume.pdf".
-  resumeUrl: null,
+  // Generated from resume/resume.html with `pnpm resume`.
+  resumeUrl: "/resume.pdf",
   socials: {
     github: { label: "GitHub", href: "https://github.com/taufeeqahmad21" },
     linkedin: { label: "LinkedIn", href: "https://www.linkedin.com/in/taufeeqahmaddev" },

@@ -45,7 +45,7 @@ shows an honest "pending" state instead of a broken link) or explicitly flagged 
 | Email | `src/data/profile.ts` → `const email` | ✅ Set |
 | GitHub profile URL | `src/data/profile.ts` → `socials.github.href` | ✅ Set |
 | LinkedIn URL | `src/data/profile.ts` → `socials.linkedin.href` | ✅ Set |
-| Résumé PDF | add `public/resume.pdf`, then set `resumeUrl: "/resume.pdf"` | `null`: Résumé button is disabled |
+| Résumé PDF | edit `resume/resume.html`, then `pnpm resume` (macOS + Chrome) to regenerate `public/resume.pdf` | ✅ `resumeUrl: "/resume.pdf"` |
 | Project live/source links | `src/data/projects.ts` → `links` | ✅ WA Toolbox (Google Play) and Kalyvor (kalyvor.com) set; InvoiceFlow pending (in development); no public source repos |
 | Project screenshots | `src/data/projects.ts` → `preview` | ✅ Real screenshots for WA Toolbox and Kalyvor; InvoiceFlow uses a labelled mockup |
 | Professional experience | `src/data/experience.ts` | ✅ Senior Android Developer at My Taxi Ride (MTR), February 2021 – Present, with confirmed responsibilities and stack |

@@ -8,7 +8,8 @@
     "preview": "pnpm dlx serve@14 out",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
-    "check": "pnpm lint && pnpm typecheck && pnpm build"
+    "check": "pnpm lint && pnpm typecheck && pnpm build",
+    "resume": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless=new --disable-gpu --no-pdf-header-footer --print-to-pdf=public/resume.pdf \"file://$PWD/resume/resume.html\""
   },
   "dependencies": {
     "lucide-react": "^1.68.0",

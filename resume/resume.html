@@ -24,6 +24,8 @@
   h1 { font-size: 24pt; font-weight: 700; letter-spacing: -0.02em; color: #111827; line-height: 1.1; }
   .title { margin-top: 3pt; font-size: 11pt; font-weight: 500; color: #3b5bdb; }
   .loc { color: #6b7280; font-weight: 400; }
+  .split { display: grid; grid-template-columns: 1.6fr 1fr; gap: 18pt; }
+  .split b { color: #111827; }
   .contact { margin-top: 7pt; display: flex; flex-wrap: wrap; gap: 3pt 12pt; font-size: 8.6pt; color: #4b5563; }
   .contact span::before { content: ""; }
 
@@ -58,7 +60,7 @@
 <body>
   <header>
     <h1>Taufeeq Ahmad</h1>
-    <p class="title">Senior Android Developer &amp; Software Engineer <span class="loc">· Lahore, Pakistan</span></p>
+    <p class="title">Senior Android Developer · Real-Time &amp; Location-Based Apps <span class="loc">· Lahore, Pakistan · Open to remote</span></p>
     <p class="contact">
       <a href="https://taufeeqahmad21.github.io/">taufeeqahmad21.github.io</a>
       <a href="mailto:taufeeqahmad2998@gmail.com">taufeeqahmad2998@gmail.com</a>
@@ -70,11 +72,10 @@
   <section>
     <h2>Profile</h2>
     <p class="summary">
-      Android developer and software engineer with professional Android experience since 2021,
-      building and maintaining production apps at My Taxi Ride. Works in Kotlin and Jetpack Compose,
-      structured around MVVM and Clean Architecture, and builds web platforms with Next.js, React and
-      TypeScript. Independently designs, builds and releases products end to end: WA Toolbox on
-      Google Play and Kalyvor on the web.
+      Android engineer with 8+ years building real-time, location-based apps for ride-hailing and taxi
+      platforms, from live driver tracking to booking, dispatch and in-trip messaging. Works in Kotlin and
+      Jetpack Compose with MVVM and Clean Architecture, and builds full-stack web products with Next.js and
+      TypeScript. Co-founder of Kalyvor; ships independent products end to end, including WA Toolbox on Google Play.
     </p>
   </section>
 
@@ -82,20 +83,27 @@
     <h2>Experience</h2>
     <div class="entry">
       <div class="entry-head">
-        <h3>Senior Android Developer <span class="org">· My Taxi Ride (MTR)</span></h3>
-        <span class="meta">February 2021 – Present</span>
+        <h3>Senior Android Developer <span class="org">· My Taxi Ride Inc. (New York, Remote)</span></h3>
+        <span class="meta">Feb 2021 – Present</span>
+      </div>
+      <p>Develop and maintain the Android apps for a real-time ride-hailing platform serving drivers and passengers.</p>
+      <ul>
+        <li>Built live driver tracking and trip-status updates using Google Maps SDK, Firebase and MQTT.</li>
+        <li>Reduced crash and ANR rates by restructuring background processing and main-thread work.</li>
+        <li>Integrated REST APIs and push messaging for booking, dispatch and in-trip communication.</li>
+        <li>Improved app responsiveness and UX across the driver and passenger flows.</li>
+      </ul>
+      <p class="stack"><b>Stack:</b> Kotlin, Java, Jetpack Compose, Google Maps SDK, Firebase, MQTT, REST APIs, MVVM, Clean Architecture</p>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <h3>Mobile Application Developer <span class="org">· BrindaSoft (Lahore)</span></h3>
+        <span class="meta">Mar 2018 – Oct 2022</span>
       </div>
       <p>
-        Building and maintaining multiple production Android applications across My Taxi Ride's
-        transportation and dispatch software ecosystem.
+        Developed Android features for a scalable taxi platform, including real-time location tracking,
+        driver–passenger communication and live trip updates, built on REST APIs and Firebase.
       </p>
-      <ul>
-        <li>Develop, ship and maintain features across several Android apps in Kotlin, Java and Jetpack Compose.</li>
-        <li>Design and implement app architecture using MVVM and Clean Architecture to keep code testable and easy to change.</li>
-        <li>Integrate REST APIs and backend services that connect the apps to the wider dispatch platform.</li>
-        <li>Diagnose and resolve performance issues and production bugs through profiling and debugging.</li>
-      </ul>
-      <p class="stack"><b>Stack:</b> Kotlin, Android SDK, Java, Jetpack Compose, MVVM, Clean Architecture</p>
     </div>
   </section>
 
@@ -103,49 +111,54 @@
     <h2>Products</h2>
     <div class="entry">
       <div class="entry-head">
-        <h3>WA Toolbox <span class="org">· Android app</span></h3>
-        <span class="meta">Published on Google Play</span>
+        <h3>Kalyvor <span class="org">· Co-Founder · Productivity web platform</span></h3>
+        <span class="meta">Nov 2026 – Present</span>
       </div>
-      <p class="sub">Design, development and Google Play release</p>
       <p>
-        All-in-one Android utility app for messaging: direct chat without saving numbers, status saver,
-        QR code tools, text repeater, fancy text, saved messages and a cleaner, in one lightweight app.
+        Tools-first platform bringing online tools for PDFs, images, documents, developers and everyday
+        calculations into one searchable place, with no account needed. Own product direction, architecture, UI and delivery.
       </p>
-      <p class="stack"><b>Stack:</b> Kotlin, Android SDK, AdMob
-        · <a href="https://play.google.com/store/apps/details?id=com.watoolbox.app">Google Play</a></p>
+      <p class="stack"><b>Stack:</b> Next.js, TypeScript, Tailwind CSS · <a href="https://kalyvor.com/">kalyvor.com</a></p>
     </div>
     <div class="entry">
       <div class="entry-head">
-        <h3>Kalyvor <span class="org">· Productivity web platform</span></h3>
-        <span class="meta">Live</span>
+        <h3>WA Toolbox <span class="org">· Android app</span></h3>
+        <span class="meta">Live on Google Play</span>
       </div>
-      <p class="sub">Product, design and web development</p>
       <p>
-        Tools-first platform bringing online tools for PDFs, images, documents, developers and everyday
-        calculations into one searchable place. No account or setup; every tool shares one design language.
+        All-in-one messaging utility: direct chat without saving numbers, status saver, QR tools, text repeater,
+        fancy text, saved messages and a cleaner. Designed, built and released end to end.
       </p>
-      <p class="stack"><b>Stack:</b> Next.js, TypeScript, Tailwind CSS
-        · <a href="https://kalyvor.com/">kalyvor.com</a></p>
+      <p class="stack"><b>Stack:</b> Kotlin, Android SDK, AdMob · <a href="https://play.google.com/store/apps/details?id=com.watoolbox.app">Google Play</a></p>
     </div>
     <div class="entry">
       <div class="entry-head">
         <h3>InvoiceFlow <span class="org">· Android app</span></h3>
         <span class="meta">In development</span>
       </div>
-      <p class="sub">Product design and Android development</p>
-      <p>Invoice, estimate and receipt management app for freelancers and small businesses.</p>
-      <p class="stack"><b>Stack:</b> Kotlin, Jetpack Compose</p>
+      <p>Invoice, estimate and receipt app for freelancers and small businesses. <span class="stack"><b>Stack:</b> Kotlin, Jetpack Compose</span></p>
     </div>
   </section>
 
   <section>
     <h2>Skills</h2>
     <dl class="skills">
-      <dt>Android</dt><dd>Kotlin, Jetpack Compose, Android SDK, Java, MVVM, Clean Architecture</dd>
+      <dt>Android</dt><dd>Kotlin, Java, Jetpack Compose, Android SDK, Google Maps SDK, MQTT, MVVM, Clean Architecture</dd>
       <dt>Web</dt><dd>Next.js, React, TypeScript, Tailwind CSS, Node.js</dd>
-      <dt>Backend &amp; Cloud</dt><dd>REST APIs, Firebase, AWS, Cloud Services</dd>
+      <dt>Backend &amp; Cloud</dt><dd>REST APIs, Firebase, AWS, push messaging</dd>
       <dt>Tools</dt><dd>Git, GitHub, Android Studio, VS Code</dd>
     </dl>
+  </section>
+
+  <section class="split">
+    <div>
+      <h2>Education</h2>
+      <p><b>BS Computer Science</b> · Lahore Leads University · 2016 – 2020</p>
+    </div>
+    <div>
+      <h2>Languages</h2>
+      <p>English (professional) · Urdu (native)</p>
+    </div>
   </section>
 </body>
 </html>

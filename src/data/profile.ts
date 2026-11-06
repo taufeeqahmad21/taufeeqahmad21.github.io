@@ -23,7 +23,7 @@ export const profile: Profile = {
   },
   email,
   // Generated from resume/resume.html with `pnpm resume`.
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/Taufeeq-Ahmad-Resume.pdf",
   socials: {
     github: { label: "GitHub", href: "https://github.com/taufeeqahmad21" },
     linkedin: { label: "LinkedIn", href: "https://www.linkedin.com/in/taufeeqahmad21" },

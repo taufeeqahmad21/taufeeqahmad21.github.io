@@ -5,7 +5,7 @@ export const skillCategories: SkillCategory[] = [
     id: "android",
     title: "Android",
     description: "Native apps with modern, declarative UI and layered architecture.",
-    skills: ["Kotlin", "Java", "Jetpack Compose", "Android SDK", "Google Maps SDK", "MQTT", "MVVM", "Clean Architecture"],
+    skills: ["Kotlin", "Java", "Jetpack Compose", "Coroutines & Flow", "Retrofit", "Room", "CameraX", "Google Maps SDK", "MVVM", "Clean Architecture"],
   },
   {
     id: "web",
@@ -15,14 +15,14 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     id: "backend",
-    title: "Backend & Cloud",
-    description: "APIs, data and the cloud services that keep products running.",
-    skills: ["REST APIs", "Firebase", "AWS", "Push messaging"],
+    title: "Real-time & Cloud",
+    description: "Live data, messaging and the cloud services that keep products running.",
+    skills: ["MQTT", "SignalR", "REST APIs", "Firebase", "AWS Amplify", "Push messaging"],
   },
   {
     id: "tools",
     title: "Tools",
     description: "The everyday workflow for building, reviewing and shipping.",
-    skills: ["Git", "GitHub", "Android Studio", "VS Code"],
+    skills: ["Git", "GitHub", "Android Studio", "VS Code", "Postman"],
   },
 ];

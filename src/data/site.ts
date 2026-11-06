@@ -60,7 +60,7 @@ export const about = {
     accent: "with a driver waiting and a passenger watching the map.",
   },
   paragraphs: [
-    "Since 2018 I've built Android for ride-hailing and taxi platforms, first at BrindaSoft and now at My Taxi Ride. That means live location, flaky networks, background work that has to survive the OS, and flows that can't afford to crash mid-trip.",
+    "Since 2018 I've built Android for ride-hailing and taxi platforms, first at BrindaSoft and now at My Taxi Ride. That means live location, flaky networks, background work that has to survive the OS, and flows that can't afford to crash mid-trip. I've also built a push-to-talk voice app over MQTT and SignalR with long-running background services, and identity verification with AWS Face Liveness.",
     "I work in Kotlin and Jetpack Compose and structure apps around MVVM and Clean Architecture, so features stay testable and the codebase stays easy to change. On the web I build with Next.js, React and TypeScript.",
     "Outside work I ship my own products end to end: WA Toolbox on Google Play, Kalyvor, which I co-founded, and InvoiceFlow, now in development.",
   ],

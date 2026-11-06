@@ -199,6 +199,31 @@
   }
 }
 
+/* Cursor spotlight: soft light that follows the pointer across a card. Add `data-spotlight`
+   to a positioned, `isolate` element; <Spotlight/> feeds it --spot-x / --spot-y. */
+[data-spotlight]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    32rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgb(108 150 255 / 0.1),
+    rgb(162 142 255 / 0.04) 35%,
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-spotlight]:hover::before {
+    opacity: 1;
+  }
+}
+
 /* ---- Base ---- */
 @layer base {
   html {

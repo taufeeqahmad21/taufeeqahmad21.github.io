@@ -7,7 +7,6 @@ import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Experience } from "@/components/sections/Experience";
 import { Hero } from "@/components/sections/Hero";
-import { Technology } from "@/components/sections/Technology";
 import { Work } from "@/components/sections/Work";
 
 const currentRole = employment.find((entry) => entry.endDate === null);
@@ -21,7 +20,7 @@ const personJsonLd = {
   jobTitle: profile.title,
   description: profile.positioning,
   url: `${siteUrl}/`,
-  knowsAbout: ["Android", "Kotlin", "Jetpack Compose", "Next.js", "React", "TypeScript"],
+  knowsAbout: ["Android", "Kotlin", "Jetpack Compose", "Google Maps SDK", "Real-time location", "Next.js", "React", "TypeScript"],
   sameAs: [profile.socials.github.href, profile.socials.linkedin.href].filter(Boolean),
   ...(currentRole && {
     worksFor: {
@@ -42,10 +41,9 @@ export default function HomePage() {
       <Header />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
+        <Experience />
         <Work />
         <About />
-        <Technology />
-        <Experience />
         <Contact />
       </main>
       <Footer />

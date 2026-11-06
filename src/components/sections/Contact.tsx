@@ -12,8 +12,15 @@ const channels = [
   { key: "github", Icon: GitHubIcon, value: profile.socials.github.href, fallback: "Profile link coming soon" },
 ] as const;
 
+/** Strip the scheme and add break opportunities before "@" and after "/", so long values wrap cleanly. */
 function displayValue(value: string) {
-  return value.replace(/^mailto:/, "").replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+  const text = value.replace(/^mailto:/, "").replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+  return text.split(/(?=@)|(?<=\/)/).map((part, i) => (
+    <span key={i}>
+      {i > 0 && <wbr />}
+      {part}
+    </span>
+  ));
 }
 
 export function Contact() {
@@ -45,7 +52,7 @@ export function Contact() {
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-14 md:mt-20 lg:grid-cols-12 lg:gap-12">
-          <div className="flex flex-col items-start gap-8 lg:col-span-7">
+          <div className="flex flex-col items-start gap-8 lg:col-span-7 lg:min-w-0">
             <Reveal delay={0.05}>
               <p className="max-w-xl text-pretty text-lead text-fg-muted">{copy.description}</p>
             </Reveal>
@@ -54,10 +61,12 @@ export function Contact() {
               <Reveal delay={0.1}>
                 <a
                   href={mailto}
-                  className="group inline-flex max-w-full items-center gap-3 text-[clamp(1.375rem,0.9rem+2.2vw,2.75rem)] font-medium tracking-[-0.03em] text-fg"
+                  className="group inline-flex max-w-full items-center gap-3 text-[clamp(1.25rem,0.75rem+2vw,2.5rem)] font-medium tracking-[-0.03em] text-fg"
                 >
-                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-1 [overflow-wrap:anywhere] transition-[background-size] duration-(--duration-image) ease-(--ease-out-expo) group-hover:bg-[length:100%_2px]">
-                    {profile.email}
+                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-(--duration-image) ease-(--ease-out-expo) group-hover:bg-[length:100%_2px]">
+                    {/* break only at the "@", never mid-word */}
+                    {profile.email.split("@")[0]}
+                    <wbr />@{profile.email.split("@")[1]}
                   </span>
                   <ArrowUpRight
                     className="size-[0.8em] shrink-0 text-fg-muted transition-[transform,color] duration-(--duration-slow) ease-(--ease-out-expo) group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent-strong"
@@ -89,7 +98,7 @@ export function Contact() {
             </Reveal>
           </div>
 
-          <Reveal delay={0.1} className="lg:col-span-4 lg:col-start-9">
+          <Reveal delay={0.1} className="lg:col-span-5 lg:col-start-8 xl:col-span-4 xl:col-start-9">
             <div className="flex flex-col gap-5">
               <p
                 className={cn(
@@ -120,7 +129,7 @@ export function Contact() {
                       </span>
                       <span className="flex min-w-0 flex-1 flex-col">
                         <span className="text-xs text-fg-subtle">{label}</span>
-                        <span className={cn("text-sm [overflow-wrap:anywhere]", value ? "text-fg" : "text-fg-subtle")}>
+                        <span className={cn("text-sm break-words", value ? "text-fg" : "text-fg-subtle")}>
                           {value ? displayValue(value) : fallback}
                         </span>
                       </span>

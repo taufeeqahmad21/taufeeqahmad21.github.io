@@ -1,7 +1,10 @@
 import { profile } from "@/data/profile";
+import { heroStats } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { ButtonArrow, ButtonLink } from "@/components/ui/Button";
 import { GitHubIcon, LinkedInIcon } from "@/components/ui/Icons";
+import { CountUp } from "@/components/ui/CountUp";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { Reveal } from "@/components/ui/Reveal";
 import { AnimatedHeadline } from "@/components/hero/AnimatedHeadline";
 import { HeroVisual } from "@/components/hero/HeroVisual";
@@ -67,9 +70,11 @@ export function Hero() {
             </Reveal>
 
             <Reveal onMount delay={0.55} className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-              <ButtonLink href="#work" size="lg" trailingIcon={<ButtonArrow />}>
-                View Selected Work
-              </ButtonLink>
+              <Magnetic>
+                <ButtonLink href="#experience" size="lg" trailingIcon={<ButtonArrow />} className="w-full sm:w-auto">
+                  See My Work
+                </ButtonLink>
+              </Magnetic>
               <ButtonLink href="#contact" size="lg" variant="secondary">
                 Contact Me
               </ButtonLink>
@@ -109,6 +114,19 @@ export function Hero() {
             <HeroVisual />
           </Reveal>
         </div>
+
+        <Reveal onMount delay={0.75} className="mt-16 lg:mt-20">
+          <dl className="grid grid-cols-3 divide-x divide-line border-y border-line">
+            {heroStats.map((stat, i) => (
+              <div key={stat.label} className="flex flex-col gap-2 px-3 py-6 first:pl-0 sm:px-8 sm:py-8">
+                <dt className="order-2 text-xs leading-snug text-fg-subtle sm:text-sm">{stat.label}</dt>
+                <dd className="order-1 text-[clamp(2rem,1.2rem+3.2vw,4rem)] font-semibold leading-none tracking-[-0.04em] text-fg tabular-nums">
+                  <CountUp value={stat.value} suffix={stat.suffix} delay={0.9 + i * 0.12} />
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
       </div>
     </section>
   );

@@ -10,15 +10,16 @@ const email: string | null = "taufeeqahmad2998@gmail.com";
 export const profile: Profile = {
   name: "Taufeeq Ahmad",
   initials: "TA",
-  title: "Android Developer & Software Engineer",
+  title: "Senior Android Developer",
   secondaryExpertise: "Full-Stack Web Development",
-  positioning: "Independent product builder who designs, develops and launches real digital products.",
-  headline: "I build digital products that make an impact.",
-  headlineAccents: ["digital products", "impact"],
+  positioning:
+    "Senior Android Developer with 8+ years building real-time, location-based apps for ride-hailing and taxi platforms.",
+  headline: "I build real-time Android apps that keep cities moving.",
+  headlineAccents: ["real-time", "moving"],
   intro:
-    "I'm Taufeeq Ahmad, an Android Developer and Software Engineer focused on building useful applications, scalable platforms and thoughtful digital experiences.",
+    "I'm Taufeeq Ahmad, a Senior Android Developer with 8+ years on ride-hailing and taxi platforms: live driver tracking, booking, dispatch and in-trip messaging. I also design and ship my own products for Android and the web.",
   availability: {
-    label: "Open to Android and software engineering opportunities",
+    label: "Open to senior Android roles · Remote",
     isPlaceholder: false,
   },
   email,

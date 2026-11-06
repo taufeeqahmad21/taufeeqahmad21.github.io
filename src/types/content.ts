@@ -45,11 +45,6 @@ export type SectionCopy = {
   description?: string;
 };
 
-export type FocusArea = {
-  title: string;
-  description: string;
-};
-
 export type SkillCategory = {
   id: string;
   title: string;
@@ -100,15 +95,6 @@ export type Project = {
   featured: boolean;
 };
 
-/** One step in the independent product journey (not employment). */
-export type JourneyEntry = {
-  /** Project this step refers to; status, platform and links come from it. */
-  projectSlug: string;
-  /** What the work involved. Factual, no invented metrics. */
-  role: string;
-  summary: string;
-};
-
 /** A professional employment entry. Only verified facts: no metrics, team sizes or clients. */
 export type EmploymentEntry = {
   id: string;
@@ -123,7 +109,10 @@ export type EmploymentEntry = {
   /** ISO end date (YYYY-MM), or null while current. */
   endDate: string | null;
   employmentType: string;
+  /** e.g. "New York · Remote". */
+  location?: string;
   summary: string;
+  /** Confirmed highlights or areas of work, shown as a numbered list. */
   responsibilities: string[];
   technologies: string[];
   links: { label: string; href: string; kind: "website" | "google-play" }[];

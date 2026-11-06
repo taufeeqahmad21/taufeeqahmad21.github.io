@@ -9,10 +9,12 @@ export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:30
 export const siteMeta = {
   title: `${profile.name} | ${profile.title}`,
   shortTitle: profile.name,
-  description: `Portfolio of ${profile.name}, an Android developer and software engineer building apps with Kotlin and Jetpack Compose and web platforms with Next.js and TypeScript.`,
+  description: `Portfolio of ${profile.name}, a Senior Android Developer with 8+ years building real-time, location-based apps for ride-hailing and taxi platforms in Kotlin and Jetpack Compose, plus web products with Next.js and TypeScript.`,
   keywords: [
     "Taufeeq Ahmad",
+    "Senior Android Developer",
     "Android Developer",
+    "Ride-hailing apps",
     "Software Engineer",
     "Kotlin",
     "Jetpack Compose",

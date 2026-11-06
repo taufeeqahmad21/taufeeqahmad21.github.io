@@ -34,8 +34,7 @@ function useActiveSection(ids: string[]) {
   return active;
 }
 
-// "technology" has no nav entry; observing it clears the highlight while it's on screen.
-const sectionIds = [...navItems.map((item) => item.id), "technology"];
+const sectionIds = navItems.map((item) => item.id);
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);

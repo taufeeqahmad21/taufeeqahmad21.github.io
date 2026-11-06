@@ -32,6 +32,7 @@ export function ProjectShowcase({ project, index, total }: ProjectShowcaseProps)
     <Reveal>
       <article
         aria-labelledby={titleId}
+        data-spotlight
         className="group surface-stage relative isolate overflow-hidden transition-[border-color] duration-(--duration-slow) hover:border-line-strong"
       >
         {/* atmosphere */}

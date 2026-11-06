@@ -1,85 +1,67 @@
-import type { FocusArea, NavItem, SectionCopy } from "@/types/content";
+import type { NavItem, SectionCopy } from "@/types/content";
 
-/** Primary navigation, in page order. "Technology" sits between Work and Experience without a nav entry. */
+/** Primary navigation, in page order. */
 export const navItems: NavItem[] = [
   { id: "home", label: "Home" },
-  { id: "work", label: "Work" },
-  { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
+  { id: "work", label: "Products" },
+  { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ];
 
+/** Android career start (BrindaSoft, March 2018), from the resume. Used for the years stat. */
+const careerStart = new Date(2018, 2, 1);
+const yearsOfAndroid = Math.floor((Date.now() - careerStart.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+
+/** Hero proof points. Only facts confirmed on the resume; recomputed at build time. */
+export const heroStats: { value: number; suffix?: string; label: string }[] = [
+  { value: yearsOfAndroid, suffix: "+", label: "Years building Android apps" },
+  { value: 2, label: "Ride-hailing & taxi platforms" },
+  { value: 3, label: "Products of my own, 2 live" },
+];
+
 export const sections = {
-  work: {
+  experience: {
     index: "01",
-    eyebrow: "Selected Work",
+    eyebrow: "Experience",
+    title: `${yearsOfAndroid}+ years on apps people`,
+    accent: "ride with every day.",
+    description:
+      "Real-time, location-based Android for ride-hailing and taxi platforms: tracking, booking, dispatch and in-trip messaging.",
+  },
+  work: {
+    index: "02",
+    eyebrow: "Products",
     title: "Products I design,",
     accent: "build and ship.",
     description:
-      "Two products are out in the world: an Android app on Google Play and a web platform. A third is in development.",
+      "Outside my day job I build my own products end to end. Two are live, an Android app on Google Play and a web platform I co-founded, and a third is in development.",
   },
   about: {
-    index: "02",
+    index: "03",
     eyebrow: "About",
     title: "Engineering with the",
     accent: "product in mind.",
   },
-  technology: {
-    index: "03",
-    eyebrow: "Technology",
-    title: "The stack behind",
-    accent: "the products.",
-    description: "Grouped by where each tool sits in a product, from the device in someone's hand to the services behind it.",
-  },
-  experience: {
-    index: "04",
-    eyebrow: "Experience",
-    title: "Where I've been",
-    accent: "building.",
-    description:
-      "Professional Android development at My Taxi Ride since 2021, alongside the products I design and ship independently.",
-  },
   contact: {
-    index: "05",
+    index: "04",
     eyebrow: "Contact",
     title: "Have an idea? Let's build something",
     accent: "meaningful.",
     description:
-      "I'm open to Android and software engineering opportunities, product collaborations and conversations about building software well. Email is the quickest way to reach me.",
+      "I'm open to senior Android and software engineering roles (remote) and product collaborations. Email is the quickest way to reach me.",
   },
 } satisfies Record<string, SectionCopy>;
 
 export const about = {
   /** Large editorial statement at the top of the About section. */
   statement: {
-    lead: "I design, build and release my own products,",
-    accent: "from a blank file to something people can use.",
+    lead: "I've spent my career on apps that have to work in real time,",
+    accent: "with a driver waiting and a passenger watching the map.",
   },
   paragraphs: [
-    "WA Toolbox is live on Google Play, Kalyvor is live on the web, and InvoiceFlow is in development. Each one has meant owning every layer: the product decisions, the architecture, the interface and the code.",
-    "On Android I work in Kotlin and Jetpack Compose and structure apps around MVVM and Clean Architecture, so features stay testable and the codebase stays easy to change. On the web I build with Next.js, React and TypeScript, backed by REST APIs, Firebase and AWS.",
-    "I pick the simplest approach that will hold up, and I care about the parts users never see: clear boundaries, readable code and performance that doesn't need apologising for.",
+    "Since 2018 I've built Android for ride-hailing and taxi platforms, first at BrindaSoft and now at My Taxi Ride. That means live location, flaky networks, background work that has to survive the OS, and flows that can't afford to crash mid-trip.",
+    "I work in Kotlin and Jetpack Compose and structure apps around MVVM and Clean Architecture, so features stay testable and the codebase stays easy to change. On the web I build with Next.js, React and TypeScript.",
+    "Outside work I ship my own products end to end: WA Toolbox on Google Play, Kalyvor, which I co-founded, and InvoiceFlow, now in development.",
   ],
-  focusAreas: [
-    {
-      title: "Android applications",
-      description: "Native apps in Kotlin and Jetpack Compose, built for real devices and real store releases.",
-    },
-    {
-      title: "Scalable web platforms",
-      description: "Fast, accessible products with Next.js, React and TypeScript, connected to APIs and cloud services.",
-    },
-    {
-      title: "Product architecture",
-      description: "Clear layers and module boundaries with MVVM and Clean Architecture, so a product can keep growing.",
-    },
-    {
-      title: "Clean, maintainable code",
-      description: "Code that's easy to read, test and change, because every product outlives its first version.",
-    },
-    {
-      title: "Real-world problem solving",
-      description: "Starting from what someone is trying to get done, then choosing the technical approach that solves it cleanly.",
-    },
-  ] satisfies FocusArea[],
 };

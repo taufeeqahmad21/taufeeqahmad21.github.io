@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { profile } from "@/data/profile";
 import { ogImage, siteMeta, siteUrl } from "@/lib/site";
 import { MotionProvider } from "@/components/layout/MotionProvider";
+import { Spotlight } from "@/components/layout/Spotlight";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <MotionProvider>{children}</MotionProvider>
+        <Spotlight />
       </body>
     </html>
   );

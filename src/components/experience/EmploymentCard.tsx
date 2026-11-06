@@ -6,7 +6,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 /** Company monogram from the abbreviation in parentheses, e.g. "My Taxi Ride (MTR)" → "MTR". */
 function monogram(company: string) {
-  return company.match(/\(([^)]+)\)/)?.[1] ?? company.slice(0, 3).toUpperCase();
+  return company.match(/\(([^)]+)\)/)?.[1] ?? company.slice(0, 2).toUpperCase();
 }
 
 /**
@@ -21,6 +21,7 @@ export function EmploymentCard({ entry }: { entry: EmploymentEntry }) {
     <Reveal>
       <article
         aria-labelledby={titleId}
+        data-spotlight
         className="group surface-stage relative isolate overflow-hidden transition-[border-color] duration-(--duration-slow) hover:border-line-strong"
       >
         <div
@@ -58,9 +59,13 @@ export function EmploymentCard({ entry }: { entry: EmploymentEntry }) {
               >
                 {monogram(entry.company)}
               </span>
-              <p className="text-[0.9375rem] leading-snug text-fg-muted">{entry.company}</p>
+              <p className="flex flex-col text-[0.9375rem] leading-snug text-fg-muted">
+                {entry.company}
+                {entry.location && <span className="text-sm text-fg-subtle">{entry.location}</span>}
+              </p>
             </div>
 
+            {entry.links.length > 0 && (
             <div className="mt-auto flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap lg:flex-col">
               {entry.links.map((link) => (
                 <ButtonLink
@@ -82,14 +87,15 @@ export function EmploymentCard({ entry }: { entry: EmploymentEntry }) {
                 </ButtonLink>
               ))}
             </div>
+            )}
           </div>
 
           {/* role column */}
           <div className="flex flex-col gap-8 p-6 sm:p-10 lg:col-span-8">
             <div className="flex flex-col gap-3">
-              <h4 id={titleId} className="text-showcase font-semibold text-fg">
+              <h3 id={titleId} className="text-showcase font-semibold text-fg">
                 {entry.role}
-              </h4>
+              </h3>
               <p className="text-lead text-fg-muted">
                 <span className="text-accent-serif">at</span> {entry.company}
               </p>
@@ -98,7 +104,7 @@ export function EmploymentCard({ entry }: { entry: EmploymentEntry }) {
             <p className="max-w-2xl text-pretty text-[1.0625rem] leading-relaxed text-fg">{entry.summary}</p>
 
             <div className="flex flex-col gap-4">
-              <p className="font-mono text-eyebrow uppercase text-fg-subtle">Responsibilities</p>
+              <p className="font-mono text-eyebrow uppercase text-fg-subtle">{current ? "Highlights" : "What I worked on"}</p>
               <ol className="grid grid-cols-1 border-t border-line md:grid-cols-2 md:gap-x-10">
                 {entry.responsibilities.map((item, i) => (
                   <li key={item} className="flex items-baseline gap-4 border-b border-line py-4">
